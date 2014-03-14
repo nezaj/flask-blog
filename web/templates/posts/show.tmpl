@@ -1,0 +1,11 @@
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}
+  {{ post.title }}
+{% endblock %}
+
+{% block content %}
+  Title: {{ post.title }}
+  <br>
+  Content: {{ post.content }}
+{% endblock %}
