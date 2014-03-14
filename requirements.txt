@@ -1,6 +1,10 @@
 Flask==0.10
+Flask-SQLAlchemy==0.16
 Jinja2==2.7
+MarkupSafe==0.19
+SQLAlchemy==0.9.3
 Werkzeug==0.9.4
-flask-sqlalchemy==0.16
-sqlalchemy==0.9.3
 gunicorn==0.17.2
+itsdangerous==0.23
+psycopg2==2.5.2
+wsgiref==0.1.2

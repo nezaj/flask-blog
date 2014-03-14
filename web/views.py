@@ -3,6 +3,7 @@ from web import app
 from web.models import Post
 
 @app.route("/")
+@app.route("/posts")
 def index():
     posts = Post.query.all()
     return render_template('/posts/index.tmpl', posts=posts)
