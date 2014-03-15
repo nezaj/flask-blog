@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-  Title: {{ post.title }}
+  <h3>{{ post.title }}</h3>
   <br>
-  Content: {{ post.content }}
+  {{ post.content|markdownize }}
+<a href="{{ url_for('posts') }}">Index</a>
 {% endblock %}

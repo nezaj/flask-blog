@@ -1,10 +1,11 @@
-from flask import render_template
+from flask import render_template, Markup
 from web import app
 from web.models import Post
+from markdown import markdown
 
 @app.route("/")
 @app.route("/posts")
-def index():
+def posts():
     posts = Post.query.all()
     return render_template('/posts/index.tmpl', posts=posts)
 
