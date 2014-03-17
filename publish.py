@@ -11,9 +11,12 @@ def publish_post(post_name):
     file_path = os.path.join(static_directory, post_name)
 
     with open(file_path, 'r') as f:
+        author = f.readline().strip('n')
         title = f.readline().strip('\n')
+        _ = f.readline() # throw-away one line
         content = f.read()
 
+    author = author[author.find(':') + 2:]
     title = title[title.find(':') + 2:]
     p = Post.query.filter_by(title=title).first()
 
@@ -26,10 +29,10 @@ def publish_post(post_name):
             db.session.delete(p)
             db.session.commit()
 
-    new_post = Post(title=title, content=content)
+    new_post = Post(author=author, title=title, content=content)
     db.session.add(new_post)
     db.session.commit()
-    print "Added {} to the db!".format(args.post)
+    print "Added {} to the db!".format(post_name)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Tool for publishing posts")
