@@ -6,7 +6,6 @@
 
 {% block content %}
   <h3>{{ post.title }}</h3>
-  <br>
-  {{ post.content|markdownize }}
-<a href="{{ url_for('posts') }}">Index</a>
+  {{ content }}
+  <a href="{{ url_for('posts') }}">Index</a>
 {% endblock %}
