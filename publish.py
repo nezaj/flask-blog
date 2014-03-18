@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+" Script to publish blog posts "
+
 import argparse
 import os
 
