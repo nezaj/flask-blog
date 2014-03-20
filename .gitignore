@@ -32,3 +32,5 @@ __pycache__
 ehthumbs.db
 Thumbs.db
 
+# Cached Flasks
+.webassets-cache/

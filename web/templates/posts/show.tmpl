@@ -1,11 +1,13 @@
 {% extends "shared/layout.tmpl" %}
 
 {% block title %}
-  {{ post.title }}
+  {{ post.title }} - Joe Averbukh
 {% endblock %}
 
 {% block content %}
-  <h3>{{ post.title }}</h3>
+  <div class="post-header">
+    <h1><div class="post-title">{{ post.title }}</div></h1>
+    <p>{{ post.timestamp.strftime('%B %d %Y') }}</p>
+  </div>
   {{ content }}
-  <a href="{{ url_for('posts') }}">Index</a>
 {% endblock %}
