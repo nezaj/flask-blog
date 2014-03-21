@@ -1,51 +1,102 @@
+/* Colors */
+$red-color: #f03838;
+$black-color: lighten(black, 20%);
+$white-color: darken(white, 25%);
+$lighter-white-color: lighten($white-color, 10%);
+
+/* Functional Colors */
+$generic-link-color: $red-color;
+$generic-link-hover-color: $red-color;
+$generic-link-hover-border-color: $red-color;
+
+$button-background-color: $red-color;
+
+/* Functional Layouts */
+$footer-height: 265px;
+
 
 /* Over-write theme rules */
+body {
+    color: $black-color;
+}
+
 p {
     line-height: 1.8;
 }
 
 a {
-    color: #f03838;
+    color: $generic-link-color;
     text-decoration: none;
     &:hover, &:focus {
-        color: #f03838;
+        color: $generic-link-hover-color;
         text-decoration: none;
-        border-bottom: 1px dashed #f03838;
+        border-bottom: 1px dashed $generic-link-hover-border-color;
     }
 }
 
-/* Generic classes */
+/* Generic CSS */
+#wrapper {
+    height: auto;
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+
+    &:after {
+        content: "";
+        display: block;
+        height: $footer-height;
+    }
+}
+
 .text-center { text-align: center; }
 
 /* Header-related CSS */
 .header {
-    margin: 100px 0px 35px
+    margin: 100px 0px 35px;
 }
 
-.site-title {
-    text-transform: uppercase;
-    text-align: center;
+.site-title-wrapper {
+    display: table;
+    margin: 0 auto;
     a {
-        background: #f03838;
+        background: $red-color;
         color: #FEFEFE;
-        padding: 5px 10px 5px;
     &:hover {
-        background: #000000;
+        background: $black-color;
         border-bottom: 0;
         }
     }
 }
 
+.site-title {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.site-buttons {
+    float: left;
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
+.button-square {
+    float: left;
+    background: $red-color;
+    color: $white-color;
+    margin-left: 10px;
+    padding: 5px 7px;
+}
+
 /* Footer-related CSS */
 .footer {
-    background: #303030;
-    color: #D3D3D3;
-    height: 256px;
+    background: $black-color;
+    height: $footer-height;
     overflow: auto;
 }
 
 .footer-copyright {
-    color: #656565;
+    color: $white-color;
     font-weight: 300;
     text-align: center;
     font-size: 0.8em;
@@ -54,11 +105,11 @@ a {
 }
 
 .footer-copyright a {
-    color: #656565;
+    color: $lighter-white-color;
     font-weight: 700;
     &:hover {
-        color: #FEFEFE;
-        border-bottom: none;
+        color: $lighter-white-color;
+        border-bottom: 1px dashed $lighter-white-color;
     }
 }
 
@@ -67,7 +118,7 @@ a {
     text-align: center;
     padding-bottom: 30px;
     margin-bottom: 30px;
-    border-bottom: 3px solid black;
+    border-bottom: 6px solid $black-color;
 }
 
 .post-title {
@@ -75,4 +126,3 @@ a {
     text-transform: uppercase;
     font-size: 1.5em;
 }
-
