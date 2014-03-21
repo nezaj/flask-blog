@@ -9,6 +9,7 @@ def register_assets(app):
 
     CSS_ASSETS = [
         'css/vendor/readable-bootstrap.css',
+        'css/vendor/font-awesome.css',
         Bundle('css/application.scss', filters='pyscss', output='css/compiled-scss.css')
     ]
 
