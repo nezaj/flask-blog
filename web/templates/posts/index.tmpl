@@ -18,7 +18,8 @@
   <ul>
     {% for post in posts %}
       <li>
-        <a href="{{ url_for('post', title=post.title) }}">{{ post.title }}</a>
+        <a href="{{ url_for('post', slug=post.slug) }}">{{ post.title }}</a>
+        -- {{ post.published_dt|friendly_time }}
       </li>
     {% endfor %}
   </ul>
