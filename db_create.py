@@ -3,9 +3,7 @@
 " Script to re-create the database "
 
 from web import db
-from publish import publish_post
-from generate import generate_post
-
+from manage_posts import publish_post, generate_post
 
 class Post(object):
 
@@ -21,8 +19,8 @@ def prepopulate():
     sample_posts = ["Hello World", "Meaning of Life", "The Universe"]
     for post in sample_posts:
         p = Post.new(post)
-        generate_post(p)
-        publish_post(p)
+        generate_post(p, force=True)
+        publish_post(p, force=True)
 
 if __name__ == '__main__':
     db.drop_all()
