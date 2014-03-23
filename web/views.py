@@ -14,7 +14,8 @@ def posts():
 def post(slug):
     " Displays an individual post "
     post = Post.query.filter_by(slug=slug).first_or_404()
-    return render_template('/posts/show.tmpl', post=post)
+    tags = ','.join([t.name for t in post.tags])
+    return render_template('/posts/show.tmpl', post=post, tags=tags)
 
 @app.route("/error")
 def error_500():

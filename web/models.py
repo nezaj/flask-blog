@@ -16,7 +16,7 @@ class Post(db.Model):
     published_dt = db.Column(db.DateTime, default=None)
     published = published_dt != None
 
-    tags = db.relationship('Tag', secondary="tags", lazy='dynamic', backref=db.backref("posts", lazy="dynamic"))
+    tags = db.relationship('Tag', secondary="tags", backref=db.backref("posts", lazy="dynamic"))
 
     def __init__(self, author, title, slug, content, published_dt):
         self.author = author
