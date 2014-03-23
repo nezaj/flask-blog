@@ -9,16 +9,21 @@ tags = db.Table('tags',
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer)
-    title = db.Column(db.String(120), index=True, unique=True)
+    title = db.Column(db.String(120), unique=True)
+    slug = db.Column(db.String(120), index=True, unique=True)
     content = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, nullable=False, default=func.now())
+
+    published_dt = db.Column(db.DateTime, default=None)
+    published = published_dt != None
 
     tags = db.relationship('Tag', secondary="tags", lazy='dynamic', backref=db.backref("posts", lazy="dynamic"))
 
-    def __init__(self, author, title, content):
+    def __init__(self, author, title, slug, content, published_dt):
         self.author = author
         self.title = title
+        self.slug = slug
         self.content = content
+        self.published_dt = published_dt
 
     def __repr__(self):
         return '<Post {}>'.format(self.title)
