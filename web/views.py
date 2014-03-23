@@ -15,3 +15,7 @@ def post(slug):
     " Displays an individual post "
     post = Post.query.filter_by(slug=slug).first_or_404()
     return render_template('/posts/show.tmpl', post=post)
+
+@app.route("/error")
+def error_500():
+    raise Exception("This is a fake error for testing purposes.")
