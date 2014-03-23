@@ -3,6 +3,8 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
 
+web_directory = os.path.abspath(os.path.dirname(__file__))
+
 def register_assets(app):
     assets = Environment(app)
     assets.url = app.static_url_path
