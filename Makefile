@@ -16,14 +16,14 @@ check:
 
 virtualenv:
 	test -d $(VENV_PATH) || virtualenv $(VENV_PATH)
-	$(VENV_ACTIVATE) && pip install -r requirements.txt
+	$(VENV_ACTIVATE) && python setup.py --quiet develop
 
 pep8:
 	@echo "Running pep8..."
-	$(VENV_ACTIVATE) && pep8 web
+	$(VENV_ACTIVATE) && pep8 src/web
 
 pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
-    pylint web && \
-	pylint *.py
+    pylint src/web && \
+	pylint src/*.py
