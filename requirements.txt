@@ -1,4 +1,7 @@
 Flask==0.10
+pep8
+pylint
+Flask==0.10.1
 Flask-Assets==0.9
 Flask-Misaka==0.2.0
 Flask-SQLAlchemy==0.16
