@@ -1,12 +1,9 @@
-Flask==0.10
 pep8
 pylint
 Flask==0.10.1
 Flask-Assets==0.9
-Flask-Misaka==0.2.0
 Flask-SQLAlchemy==0.16
 Jinja2==2.7
-Markdown==2.4
 MarkupSafe==0.19
 SQLAlchemy==0.9.3
 Werkzeug==0.9.4
@@ -15,8 +12,5 @@ gunicorn==0.17.2
 itsdangerous==0.23
 misaka==1.0.2
 psycopg2==2.5.2
-pyScss==1.2.0.post3
+pyscss==1.2.0
 pyparsing==2.0.1
-six==1.6.1
-webassets==0.9
-wsgiref==0.1.2

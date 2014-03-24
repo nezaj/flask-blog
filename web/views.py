@@ -1,7 +1,6 @@
 from flask import render_template, Markup
 from web import app
 from web.models import Post
-from markdown import markdown
 
 @app.route("/")
 @app.route("/posts")
