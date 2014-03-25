@@ -3,7 +3,17 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
 
+from config import config_obj
+
 web_directory = os.path.abspath(os.path.dirname(__file__))
+
+class BlogApp(Flask):
+
+    db = None # initialized later
+
+    def __init__(self, config_obj):
+        super(BlogApp, self).__init__(__name__)
+        self.config.from_object(config_obj)
 
 def register_assets(app):
     assets = Environment(app)
@@ -19,12 +29,8 @@ def register_assets(app):
     assets.register('scss_all', css)
     return assets
 
-app = Flask(__name__)
+app = BlogApp(config_obj)
 register_assets(app)
-
-### TODO: Hacky, come up with a better way
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:////tmp/test.db')
-
-db = SQLAlchemy(app)
+app.db = SQLAlchemy(app)
 
 from web import views, models, templating

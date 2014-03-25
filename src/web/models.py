@@ -1,22 +1,30 @@
 from sqlalchemy import func
-from web import db
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy.schema import Column, ForeignKey, Table
+from sqlalchemy.types import Integer, String, Text, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-tags = db.Table('tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-    db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+Base = declarative_base()
+
+tags = Table(
+    'post_tags', Base.metadata,
+    Column('tag_id', Integer, ForeignKey('tag.id')),
+    Column('post_id', Integer, ForeignKey('post.id'))
 )
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.Integer)
-    title = db.Column(db.String(120), unique=True)
-    slug = db.Column(db.String(120), index=True, unique=True)
-    content = db.Column(db.Text)
+class Post(Base):
+    __tablename__ = 'posts'
 
-    published_dt = db.Column(db.DateTime, default=None)
+    id = Column(Integer, primary_key=True)
+    author = Column(Integer)
+    title = Column(String(120), unique=True)
+    slug = Column(String(120), index=True, unique=True)
+    content = Column(Text)
+
+    published_dt = Column(DateTime, default=None)
     published = published_dt != None
 
-    tags = db.relationship('Tag', secondary="tags", backref=db.backref("posts", lazy="dynamic"))
+    tags = relationship('Tag', secondary="post_tags", backref=backref("posts", lazy="dynamic"))
 
     def __init__(self, author, title, slug, content, published_dt):
         self.author = author
@@ -28,9 +36,11 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.title)
 
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), index=True, unique=True)
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(40), index=True, unique=True)
 
     def __init__(self, name):
         self.name = name
