@@ -1,6 +1,8 @@
-from flask import render_template, Markup
+from flask import render_template, Markup, jsonify
 from web import app
 from web.models import Post
+from config import config_obj
+from web import app
 
 @app.route("/")
 @app.route("/posts")
@@ -19,3 +21,13 @@ def post(slug):
 @app.route("/error")
 def error_500():
     raise Exception("This is a fake error for testing purposes.")
+
+# TODO: Turn this off when you do live delopyment
+@app.route("/version")
+def version():
+    data = {
+        "config": config_obj.__name__,
+        "debug": app.debug,
+        "database": repr(app.db.engine.url)
+    }
+    return jsonify(data)
