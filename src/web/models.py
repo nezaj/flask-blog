@@ -4,12 +4,13 @@ from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+from web.db import named_declarative_base
 
-tags = Table(
-    'post_tags', Base.metadata,
-    Column('tag_id', Integer, ForeignKey('tag.id')),
-    Column('post_id', Integer, ForeignKey('post.id'))
+Base = named_declarative_base()
+
+tags = Table('post_tags', Base.metadata,
+    Column('tag_id', Integer, ForeignKey('tags.id')),
+    Column('post_id', Integer, ForeignKey('posts.id'))
 )
 
 class Post(Base):
