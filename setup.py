@@ -12,7 +12,7 @@ dependencies = [
     "sqlalchemy==0.9.3",
     "flask==0.10.1",
     "flask-assets==0.9",
-    "flask-sqlalchemy==0.16",
+    "alembic==0.6.3",
     "psycopg2==2.5.2",
 ]
 
