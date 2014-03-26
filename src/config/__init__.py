@@ -14,5 +14,3 @@ config_dict = {
 
 config_env = os.getenv('FLASK_BLOG_ENV')
 config_obj = config_dict.get(config_env) or DevConfig
-
-

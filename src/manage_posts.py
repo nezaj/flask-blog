@@ -6,7 +6,7 @@ import argparse
 import os
 
 from sqlalchemy import func
-from web import db
+from web import app
 from web.models import Post, Tag
 from util import posts_directory, clean_title, get_post_path, overwrite_file, slugify
 
@@ -29,10 +29,10 @@ def publish_post(args, force=False):
 
     # TODO: This should go somewhere else
     def add_new_tags(tags):
-        new_tags = [Tag(name=t) for t in tags if not Tag.query.filter_by(name=t).first()]
+        new_tags = [Tag(name=t) for t in tags if not app.db.session.query(Tag).filter_by(name=t).first()]
         if new_tags:
-            db.session.add_all(new_tags)
-            db.session.commit()
+            app.db.session.add_all(new_tags)
+            app.db.session.commit()
 
     post_path = get_post_path(args.title)
 
@@ -56,15 +56,15 @@ def publish_post(args, force=False):
     if '' in tags: tags.remove('')
 
     # Prompt whether to delete post if already exists in db
-    p = Post.query.filter_by(title=title).first()
+    p = app.db.session.query(Post).filter_by(title=title).first()
     if not force and p:
         resp = raw_input("Post with title '{}' already exists! Do you want to overwite (y/n)? ".format(title))
         if resp != 'y':
             print "'{}' was not added to the db".format(title)
             return
         else:
-            db.session.delete(p)
-            db.session.commit()
+            app.db.session.delete(p)
+            app.db.session.commit()
 
     # Create post object
     new_post = Post(
@@ -78,12 +78,12 @@ def publish_post(args, force=False):
     # Assign tags to post
     if tags:
         add_new_tags(tags)
-        tags = [Tag.query.filter_by(name=t).first() for t in tags]
+        tags = [app.db.session.query(Tag).filter_by(name=t).first() for t in tags]
         new_post.tags = tags
 
     # Commit to db
-    db.session.add(new_post)
-    db.session.commit()
+    app.db.session.add(new_post)
+    app.db.session.commit()
     print "Added {} to the db!".format(title)
 
 def generate_post(args, force=False):
@@ -120,8 +120,8 @@ def list_posts(args):
         for p in posts:
             print p.title
 
-    published_posts = db.session.query(Post).filter(Post.published).order_by(Post.published_dt.desc())
-    unpublished_posts = db.session.query(Post).filter(~Post.published)
+    published_posts = app.db.session.query(Post).filter(Post.published).order_by(Post.published_dt.desc())
+    unpublished_posts = app.db.session.query(Post).filter(~Post.published)
 
     div = "="*20
     print '\n{}\nPublished Posts:\n{}\n'.format(div, div)

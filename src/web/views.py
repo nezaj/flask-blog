@@ -1,4 +1,4 @@
-from flask import render_template, Markup, jsonify
+from flask import render_template, Markup, jsonify, abort
 from web import app
 from web.models import Post
 from config import config_obj
@@ -8,13 +8,16 @@ from web import app
 @app.route("/posts")
 def posts():
     " Displays a list of posts "
-    posts = Post.query.order_by(Post.published_dt.desc())
+    posts = app.db.session.query(Post).order_by(Post.published_dt.desc())
     return render_template('/posts/index.tmpl', posts=posts)
 
 @app.route("/posts/<string:slug>")
 def post(slug):
     " Displays an individual post "
-    post = Post.query.filter_by(slug=slug).first_or_404()
+    post = app.db.session.query(Post).filter_by(slug=slug).first()
+    if not post:
+        abort(404)
+
     tags = ','.join([t.name for t in post.tags])
     return render_template('/posts/show.tmpl', post=post, tags=tags)
 

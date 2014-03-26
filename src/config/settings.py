@@ -1,4 +1,8 @@
+import os
 from sqlalchemy.engine.url import URL
+
+# TODO: UGLY
+web_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'web'))
 
 class BaseConfig(object):
     # controls whether web interfance users are in Flask debug mode
@@ -18,20 +22,14 @@ class BaseConfig(object):
 class DevConfig(BaseConfig):
     DEBUG = True
     RELOAD = True
-    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database='dev.db')
+    db_path = os.path.join(web_directory, 'dev.db')
+    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class HerokuConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database='dev.db')
+    # TODO: Make this point to the right thing
+    db_path = os.path.join(web_directory, 'dev.db')
+    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
     # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 class TestConfig(BaseConfig):
     TESTING = True
-
-from settings import DevConfig, HerokuConfig, TestConfig
-config_dict = {
-    'dev': DevConfig,
-    'heroku': HerokuConfig,
-    'test': TestConfig
-}
-
-

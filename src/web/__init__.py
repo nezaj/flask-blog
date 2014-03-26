@@ -1,9 +1,9 @@
 import os
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.assets import Environment, Bundle
 
-from config import config_obj
+import config
+from web import assets
+from web import db
 
 web_directory = os.path.abspath(os.path.dirname(__file__))
 
@@ -15,22 +15,29 @@ class BlogApp(Flask):
         super(BlogApp, self).__init__(__name__)
         self.config.from_object(config_obj)
 
-def register_assets(app):
-    assets = Environment(app)
-    assets.url = app.static_url_path
+def initialize_db(app):
+    db_url = app.config['SQLALCHEMY_DATABASE_URI']
+    app.db = db.DatabaseConnection(db_url)
 
-    CSS_ASSETS = [
-        'css/vendor/readable-bootstrap.css',
-        'css/vendor/font-awesome.css',
-        Bundle('css/application.scss', filters='pyscss', output='css/compiled-scss.css')
-    ]
+    @app.teardown_appcontext
+    def remove_session(response):
+        app.db.session.remove()
+        return response
 
-    css = Bundle(*CSS_ASSETS, filters='cssmin', output='css/bundle.min.css')
-    assets.register('scss_all', css)
-    return assets
+def initialize_app(app):
+    initialize_db(app)
+    assets.register_assets(app)
 
-app = BlogApp(config_obj)
-register_assets(app)
-app.db = SQLAlchemy(app)
+def create_app():
+    " Makes the Flask app. "
+    config_obj = config.config_obj
+    app = BlogApp(config_obj)
+    initialize_app(app)
 
-from web import views, models, templating
+    return app
+
+app = create_app()
+
+# Import routes and template filters
+from web import views
+from web import templating
