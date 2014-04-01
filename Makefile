@@ -26,4 +26,4 @@ pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
     pylint src/web && \
-	pylint src/*.py
+	PYTHONPATH=src pylint src/*.py
