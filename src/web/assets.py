@@ -1,4 +1,4 @@
-from flask.ext.assets import Environment, Bundle
+from flask_assets import Environment, Bundle
 
 CSS_ASSETS = [
     'css/vendor/readable-bootstrap.css',
@@ -15,4 +15,3 @@ def register_assets(app):
 
     assets.register('css_all', css)
     return assets
-

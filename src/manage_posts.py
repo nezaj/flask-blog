@@ -8,10 +8,11 @@ import os
 from sqlalchemy import func
 from web import app
 from web.models import Post, Tag
-from util import posts_directory, clean_title, get_post_path, overwrite_file, slugify
+from util import clean_title, get_post_path, overwrite_file, slugify
 
 def delete_post(args):
     " Deletes a file at the specified file-path "
+
     # TODO: Make this delete the post in the db as well
 
     post_path = get_post_path(args.title)
@@ -23,6 +24,8 @@ def delete_post(args):
         print "Error: Could not find {}".format(post_path)
 
 def publish_post(args, force=False):
+
+    # TODO: This function is doing a lot of things, let's clean it up
 
     def parse_attr(attr):
         return attr[attr.find(':') + 2:]
@@ -53,7 +56,8 @@ def publish_post(args, force=False):
     title = parse_attr(title)
     slug = slugify(title)
     tags = parse_attr(tags).split(',')
-    if '' in tags: tags.remove('')
+    if '' in tags:
+        tags.remove('')
 
     # Prompt whether to delete post if already exists in db
     p = app.db.session.query(Post).filter_by(title=title).first()
@@ -114,6 +118,7 @@ def generate_post(args, force=False):
 
 def list_posts(args):
     " List published and unpublished posts "
+
     # TODO: This is kind of useless right now. Make it better
 
     def display_posts(posts):

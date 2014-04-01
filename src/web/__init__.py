@@ -6,7 +6,7 @@ from web import assets, db
 
 class BlogApp(Flask):
 
-    db = None # initialized later
+    db = None  # initialized later
 
     def __init__(self, app_config):
         super(BlogApp, self).__init__(__name__)
@@ -17,7 +17,7 @@ def initialize_db(app):
     app.db = db.DatabaseConnection(db_url)
 
     @app.teardown_appcontext
-    def remove_session(response):
+    def remove_session(response):  # pylint: disable=W0612
         app.db.session.remove()
         return response
 

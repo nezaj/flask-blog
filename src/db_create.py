@@ -12,8 +12,8 @@ def prepopulate_db():
     class Post(object):
 
         @classmethod
-        def new(self, title):
-            return Post('nezaj', title)
+        def new(cls, title):
+            return cls('nezaj', title)
 
         def __init__(self, author, title):
             self.author = author

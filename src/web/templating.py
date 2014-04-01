@@ -11,6 +11,8 @@ from web import app
 @app.template_filter()
 def markdownize(content):
     " Converts Markdown content into html "
+    # pylint can't recognize misaka.html
+    # pylint: disable=E1101
     return Markup(misaka.html(content))
 
 @app.template_filter()
@@ -44,8 +46,9 @@ def friendly_time(dt, past_="ago", future_="from now", default="just now"):
     for period, singular, plural in periods:
 
         if period:
-            return "%d %s %s" % (period, \
-                singular if period == 1 else plural, \
+            return "%d %s %s" % (
+                period,
+                singular if period == 1 else plural,
                 past_ if dt_is_past else future_)
 
     return default

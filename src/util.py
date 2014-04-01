@@ -18,6 +18,7 @@ def slugify(text, delim=u'-'):
     Generates an ASCII-only slug.
     Thanks to this snippet http://flask.pocoo.org/snippets/5/
     """
+
     result = []
     text = unicode(text) if not isinstance(text, unicode) else text
     for word in _punct_re.split(text.lower()):
