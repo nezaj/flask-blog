@@ -1,4 +1,0 @@
-Author: nezaj
-Title: Hello World
-Tags: 
-

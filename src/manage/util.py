@@ -30,7 +30,7 @@ def slugify(text, delim=u'-'):
 def get_post_path(post_title):
     " Returns path of a post "
 
-    file_name = slugify(post_title) + ".txt"
+    file_name = slugify(post_title) + ".md"
     return os.path.join(app_config.POSTS_DIR, file_name)
 
 def overwrite_file(file_path):
@@ -40,4 +40,4 @@ def overwrite_file(file_path):
     """
 
     resp = raw_input("{} already exists! Do you want to overwrite (y/n)? ".format(file_path))
-    return True if resp != 'y' else False
+    return True if resp == 'y' else False
