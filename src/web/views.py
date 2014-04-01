@@ -1,8 +1,7 @@
-from flask import render_template, Markup, jsonify, abort
+from flask import render_template, jsonify, abort
 from web import app
 from web.models import Post
-from config import config_obj
-from web import app
+from config import app_config
 
 @app.route("/")
 @app.route("/posts")
@@ -29,7 +28,7 @@ def error_500():
 @app.route("/version")
 def version():
     data = {
-        "config": config_obj.__name__,
+        "config": app_config.__name__,
         "debug": app.debug,
         "database": repr(app.db.engine.url)
     }

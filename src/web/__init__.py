@@ -2,18 +2,15 @@ import os
 from flask import Flask
 
 import config
-from web import assets
-from web import db
-
-web_directory = os.path.abspath(os.path.dirname(__file__))
+from web import assets, db
 
 class BlogApp(Flask):
 
     db = None # initialized later
 
-    def __init__(self, config_obj):
+    def __init__(self, app_config):
         super(BlogApp, self).__init__(__name__)
-        self.config.from_object(config_obj)
+        self.config.from_object(app_config)
 
 def initialize_db(app):
     db_url = app.config['SQLALCHEMY_DATABASE_URI']
@@ -25,13 +22,14 @@ def initialize_db(app):
         return response
 
 def initialize_app(app):
+    app.static_folder = app.config['STATIC_DIR']
     initialize_db(app)
     assets.register_assets(app)
 
 def create_app():
     " Makes the Flask app. "
-    config_obj = config.config_obj
-    app = BlogApp(config_obj)
+    app_config = config.app_config
+    app = BlogApp(app_config)
     initialize_app(app)
 
     return app

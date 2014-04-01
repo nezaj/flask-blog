@@ -2,7 +2,7 @@
 
 " Script to re-create the database "
 
-import config
+from config import app_config
 from web.db import DatabaseConnection
 from web.models import Base
 from manage_posts import publish_post, generate_post
@@ -31,20 +31,16 @@ def stamp_db():
     and stamps it with the head revision
     """
 
-    import os
     from alembic.config import Config
     from alembic import command
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    alembic_ini_path = os.path.join(current_dir, 'alembic.ini')
-    alembic_cfg = Config(alembic_ini_path)
-
+    alembic_cfg = Config(app_config.ALEMBIC_INI_PATH)
     command.stamp(alembic_cfg, "head")
 
 def rebuild_db():
     " Recreates the db and stamps it with the latest revision "
 
-    db_url = config.config_obj.SQLALCHEMY_DATABASE_URI
+    db_url = app_config.SQLALCHEMY_DATABASE_URI
     db = DatabaseConnection(db_url)
 
     Base.metadata.drop_all(db.engine)

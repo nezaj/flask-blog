@@ -3,17 +3,14 @@
 import os
 import re
 from unicodedata import normalize
-
-from web import web_directory
-
-# Static directory where posts are located
-posts_directory = os.path.join(web_directory, 'static/posts')
+from config import app_config
 
 # Regex for slugify
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 
 def clean_title(t):
     "Used for pretty-formatting a blog title"
+
     return t.capitalize()
 
 def slugify(text, delim=u'-'):
@@ -31,8 +28,9 @@ def slugify(text, delim=u'-'):
 
 def get_post_path(post_title):
     " Returns path of a post "
-    slug = slugify(post_title) + ".txt"
-    return os.path.join(posts_directory, slug)
+
+    file_name = slugify(post_title) + ".txt"
+    return os.path.join(app_config.POSTS_DIR, file_name)
 
 def overwrite_file(file_path):
     """
