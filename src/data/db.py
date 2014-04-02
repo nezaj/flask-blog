@@ -1,14 +1,15 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Query, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 from config import app_config
+from data.models.base import BaseQuery
 
 class DatabaseConnection(object):
     " A database connection "
 
     def __init__(self, url, **factory_args):
         self.engine = create_engine(url)
-        self.session_factory = sessionmaker(bind=self.engine, query_cls=Query, **factory_args)
+        self.session_factory = sessionmaker(bind=self.engine, query_cls=BaseQuery, **factory_args)
         self.session = scoped_session(self.session_factory)
 
 def get_db():
