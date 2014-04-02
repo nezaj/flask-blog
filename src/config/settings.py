@@ -16,10 +16,10 @@ class BaseConfig(object):
     # Useful directories
     CONFIG_DIR = os.path.dirname(os.path.abspath(__file__))
     SRC_DIR = os.path.dirname(CONFIG_DIR)
+    POSTS_DIR = os.path.join(SRC_DIR, 'posts')
     TEST_DIR = os.path.join(SRC_DIR, 'test')
     WEB_DIR = os.path.join(SRC_DIR, 'web')
     STATIC_DIR = os.path.join(WEB_DIR, 'static')
-    POSTS_DIR = os.path.join(STATIC_DIR, 'posts')
 
     # Location of alembic config file
     ALEMBIC_INI_PATH = os.path.join(SRC_DIR, 'alembic.ini')

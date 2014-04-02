@@ -10,7 +10,8 @@ from test.generate_tools import generate_post as dummy_post
 
 def prepopulate_db():
 
-    for _ in xrange(0,50):
+    # TODO: There's a bug here with adding new tags, look into it
+    for _ in xrange(0, 50):
         p = dummy_post()
         generate_post(p, force=True)
         publish_post(p, force=True)
