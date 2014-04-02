@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-" Run dev version of webserver "
+" Run webserver "
 
 from web import app
-app.run(debug=True)
+app.run()

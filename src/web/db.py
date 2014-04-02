@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker, Query, scoped_session
 from sqlalchemy.schema import MetaData
 from sqlalchemy.ext.declarative import declarative_base
 
+from config import app_config
 class DatabaseConnection(object):
     " A database connection "
 

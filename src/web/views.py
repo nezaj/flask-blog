@@ -32,6 +32,7 @@ def version():
     data = {
         "config": app_config.__name__,
         "debug": app.debug,
-        "database": repr(app.db.engine.url)
+        "database": repr(app.db.engine.url),
+        "posts_directory": app.config['POSTS_DIR']
     }
     return jsonify(data)

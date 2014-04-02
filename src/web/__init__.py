@@ -1,16 +1,16 @@
 import os
 from flask import Flask
 
-import config
+from config import app_config
 from web import assets, db
 
 class BlogApp(Flask):
 
     db = None  # initialized later
 
-    def __init__(self, app_config):
+    def __init__(self, config_obj):
         super(BlogApp, self).__init__(__name__)
-        self.config.from_object(app_config)
+        self.config.from_object(config_obj)
 
 def initialize_db(app):
     db_url = app.config['SQLALCHEMY_DATABASE_URI']
@@ -28,7 +28,6 @@ def initialize_app(app):
 
 def create_app():
     " Makes the Flask app. "
-    app_config = config.app_config
     app = BlogApp(app_config)
     initialize_app(app)
 
