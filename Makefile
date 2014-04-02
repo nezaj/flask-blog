@@ -12,7 +12,7 @@ clean:
 
 check:
 	$(MAKE) virtualenv
-	$(MAKE) pylint pep8
+	$(MAKE) pylint pep8 nosetests
 
 virtualenv:
 	test -d $(VENV_PATH) || virtualenv $(VENV_PATH)
@@ -26,4 +26,9 @@ pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
     pylint src/web && \
+    pylint src/manage && \
 	PYTHONPATH=src pylint src/*.py
+
+nosetests:
+	@echo "Running nosetests..."
+	$(VENV_ACTIVATE) && FLASK_BLOG_ENV=test nosetests

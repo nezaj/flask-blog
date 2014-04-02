@@ -5,6 +5,7 @@ from setuptools import setup, find_packages
 dependencies = [
     "pep8",
     "pylint",
+    "nose==1.3.0",
     "cssmin==0.2.0",
     "pyscss==1.2.0",
     "misaka==1.0.2",

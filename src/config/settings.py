@@ -10,19 +10,13 @@ class BaseConfig(object):
     # (e.g. Werkzeug stack trace console, unminified assets)
     DEBUG = False
 
-    # Controls Flask testing mode (controls some error handling)
-    TESTING = False
-
-    # Controls whether we reload things from the filesystem if they change
-    # (e.g. Werkzeug reloader, templates, assets): Makes sense only for dev
-    RELOAD = False
-
     # Location of db connection. Use in-memory db by default
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=None)
 
     # Useful directories
     CONFIG_DIR = os.path.dirname(os.path.abspath(__file__))
     SRC_DIR = os.path.dirname(CONFIG_DIR)
+    TEST_DIR = os.path.join(SRC_DIR, 'test')
     WEB_DIR = os.path.join(SRC_DIR, 'web')
     STATIC_DIR = os.path.join(WEB_DIR, 'static')
     POSTS_DIR = os.path.join(STATIC_DIR, 'posts')
@@ -32,12 +26,13 @@ class BaseConfig(object):
 
 class DevConfig(BaseConfig):
     DEBUG = True
-    RELOAD = True
     db_path = os.path.join(BaseConfig.WEB_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class TestConfig(BaseConfig):
-    TESTING = True
+    POSTS_DIR = os.path.join(BaseConfig.TEST_DIR, 'posts')
+    db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
+    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class HerokuConfig(BaseConfig):
     # TODO: Make this point to the right thing
