@@ -1,27 +1,18 @@
 #!/usr/bin/env python
 
-" Script to re-create the database "
+" Script to re-create the database and populate it with some sample posts"
 
 from config import app_config
 from web.db import DatabaseConnection
 from web.models import Base
-from manage_posts import publish_post, generate_post
+from manage import publish_post, generate_post
+from test.generate_tools import generate_post as dummy_post
 
 def prepopulate_db():
 
-    class Post(object):
-
-        @classmethod
-        def new(cls, title):
-            return cls('nezaj', title)
-
-        def __init__(self, author, title):
-            self.author = author
-            self.title = title
-
-    sample_posts = ["Hello World", "Meaning of Life", "The Universe"]
-    for post in sample_posts:
-        p = Post.new(post)
+    sample_titles = ["Hello World", "Meaning of Life", "The Universe"]
+    for title in sample_titles:
+        p = dummy_post("nezaj", title)
         generate_post(p, force=True)
         publish_post(p, force=True)
 
