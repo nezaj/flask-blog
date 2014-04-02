@@ -1,5 +1,5 @@
 import os
-from manage.util import get_post_path, overwrite_file
+from .util import get_post_path, overwrite_file
 
 def generate_post(args, force=False):
     """
@@ -23,6 +23,8 @@ def generate_post(args, force=False):
         f.write("Author: {}\n".format(args.author))
         f.write("Title: {}\n".format(args.title))
         f.write("Tags: {}\n".format(', '.join(getattr(args, 'tags', ''))))
-        f.write("\n") # Extra newline at the end
+        f.write("\n") # Extra newline between metadata and content
+        if args.content:
+            f.write(args.content)
 
     print "Generated new file at {}".format(post_path)

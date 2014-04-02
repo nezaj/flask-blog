@@ -11,6 +11,11 @@ class DatabaseConnection(object):
         self.session_factory = sessionmaker(bind=self.engine, query_cls=Query, **factory_args)
         self.session = scoped_session(self.session_factory)
 
+def get_db():
+    " Returns a database connection based on current config "
+    db_url = app_config.SQLALCHEMY_DATABASE_URI
+    return DatabaseConnection(db_url)
+
 def named_declarative_base():
     """
     Returns a declarative base SQLAlchemy object with naming conventions

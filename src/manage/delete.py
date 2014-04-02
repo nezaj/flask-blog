@@ -1,6 +1,5 @@
-
 import os
-from web import app
+from web.db import get_db
 from web.models import Post
 from manage.util import get_post_path
 
@@ -19,13 +18,14 @@ def delete_post(args):
             print "Error: Could not find {}".format(post_path)
 
     def delete_from_db(title):
-        post_model = app.db.session.query(Post).filter(Post.title == args.title).first()
+        post_model = db.session.query(Post).filter(Post.title == args.title).first()
         if post_model:
-            app.db.session.delete(post_model)
-            app.db.session.commit()
-            print "Remove {}".format(post_model)
+            db.session.delete(post_model)
+            db.session.commit()
+            print 'Removed "{}" from the db'.format(title)
         else:
             print 'Error: Could not find "{}" in the db'.format(title)
 
+    db = get_db()
     delete_from_dir(args.title)
     delete_from_db(args.title)
