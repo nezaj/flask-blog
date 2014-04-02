@@ -2,7 +2,7 @@
 import os
 from web import app
 from web.models import Post
-from util import get_post_path
+from manage.util import get_post_path
 
 def delete_post(args):
     """

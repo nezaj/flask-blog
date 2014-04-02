@@ -1,5 +1,5 @@
 import os
-from util import get_post_path, overwrite_file
+from manage.util import get_post_path, overwrite_file
 
 def generate_post(args, force=False):
     """

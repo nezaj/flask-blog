@@ -1,7 +1,8 @@
 from web import app
 from web.models import Post
 
-def list_posts(args):
+# TODO: Make this more useful somehow
+def list_posts(args):  # pylint: disable=W0613
     " List published and unpublished posts "
 
     def display_posts(posts):
