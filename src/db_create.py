@@ -10,9 +10,8 @@ from test.generate_tools import generate_post as dummy_post
 
 def prepopulate_db():
 
-    sample_titles = ["Hello World", "Meaning of Life", "The Universe"]
-    for title in sample_titles:
-        p = dummy_post("nezaj", title)
+    for _ in xrange(0,50):
+        p = dummy_post()
         generate_post(p, force=True)
         publish_post(p, force=True)
 

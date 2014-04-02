@@ -25,7 +25,7 @@ def generate_tags():
     " Generates a random list of tags "
     return generate_phrase().split()
 
-def generate_post(author, title):
-    return PostStruct(author=author,title=title,
-                      content=generate_content(),
-                      tags=generate_tags())
+def generate_post(author="nezaj", title=None):
+    if title is None:
+        title = generate_phrase()
+    return PostStruct(author=author, title=title, content=generate_content(), tags=generate_tags())
