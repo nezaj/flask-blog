@@ -25,8 +25,9 @@ pep8:
 pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
-    pylint src/web && \
+    pylint src/data && \
     pylint src/manage && \
+    pylint src/web && \
 	PYTHONPATH=src pylint src/*.py
 
 nosetests:

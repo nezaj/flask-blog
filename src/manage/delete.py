@@ -1,6 +1,6 @@
 import os
-from web.db import get_db
-from web.models import Post
+from data.db import get_db
+from data.models import Post
 from manage.util import get_post_path
 
 def delete_post(args):

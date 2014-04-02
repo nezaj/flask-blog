@@ -1,6 +1,6 @@
 from sqlalchemy import func
-from web.db import get_db
-from web.models import Post, Tag
+from data.db import get_db
+from data.models import Post, Tag
 from manage.util import get_post_path, slugify
 
 def publish_post(args, force=False):

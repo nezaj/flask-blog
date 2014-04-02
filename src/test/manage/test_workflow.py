@@ -2,8 +2,8 @@
 from sqlalchemy import create_engine
 
 from manage import generate_post, publish_post, delete_post
-from web.db import get_db
-from web.models import Base
+from data.db import get_db
+from data.models import Base
 from test.generate_tools import generate_post as dummy_post
 
 class TestPostWorkFlow(object):

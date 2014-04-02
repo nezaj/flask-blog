@@ -1,6 +1,6 @@
 from flask import render_template, jsonify, abort
 from web import app
-from web.models import Post
+from data.models import Post
 from config import app_config
 
 @app.route("/")
