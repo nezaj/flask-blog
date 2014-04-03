@@ -14,7 +14,7 @@ class Post(Base):
     slug = Column(String(120), index=True, unique=True)
     content = Column(Text)
 
-    published_dt = Column(DateTime, default=None)
+    published_dt = Column(DateTime, index=True, default=None)
     published = published_dt != None
 
     tags = relationship('Tag', secondary=post_tags, backref=backref("posts", lazy="dynamic"))
