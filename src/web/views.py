@@ -23,7 +23,11 @@ def post(slug):
         abort(404)
 
     tags = ','.join([t.name for t in post.tags])
-    return render_template('/posts/show.tmpl', post=post, tags=tags)
+    prev_post = app.db.session.query(Post).filter(Post.id < post.id).order_by(Post.id.desc()).first()
+    next_post = app.db.session.query(Post).filter(Post.id > post.id).order_by(Post.id.asc()).first()
+
+    return render_template('/posts/show.tmpl', post=post, tags=tags,
+                           prev_post=prev_post, next_post=next_post)
 
 @app.route("/error")
 def error_500():
