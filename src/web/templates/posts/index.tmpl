@@ -1,5 +1,24 @@
 {% extends "shared/layout.tmpl" %}
 
+{% macro render_pagination_link(n, cls, html=None) %}
+  <a class="{{ cls }}" data-page="{{ n }}" href="?page={{ n }}">
+    {{ html|safe if html else n }}
+  </a>
+{% endmacro %}
+
+{% macro render_pagination(pagination) %}
+  {% if pagination.has_next or pagination.has_prev %}
+    <nav class="pagination pagination-sm">
+      {% if pagination.has_prev %}
+        {{ render_pagination_link(pagination.prev_num, "newer-link pull-left", html="&#8592; Newer") }}
+      {% endif %}
+      {% if pagination.has_next %}
+        {{ render_pagination_link(pagination.next_num, "older-link pull-right", html="Older &#8594;") }}
+      {% endif %}
+    </nav>
+  {% endif %}
+{% endmacro %}
+
 {% block content %}
   <div class="post-header">
     <h1><div class="post-title">Hey, I'm Joe.</div></h1>
@@ -11,13 +30,16 @@
       </p>
     </h5>
   </div>
-  <ul>
-    {% for post in posts %}
-      <li>
-        <a href="{{ url_for('post', slug=post.slug) }}">{{ post.title }}</a>
-        -- {{ post.published_dt|friendly_time }}
-      </li>
-    {% endfor %}
-  </ul>
+  <div class="post-content">
+    <ul>
+      {% for post in posts.items %}
+        <li>
+          <a href="{{ url_for('post', slug=post.slug) }}">{{ post.title }}</a>
+          -- {{ post.published_dt|friendly_time }}
+        </li>
+      {% endfor %}
+    </ul>
+    {{ render_pagination(posts) }}
+  </div>
 {% endblock %}
 

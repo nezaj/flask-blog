@@ -11,5 +11,7 @@
     <br>
     <small>Tags: {{ tags }}</small>
   </div>
-  {{ post.content|markdownize }}
+  <div class="post-content">
+    {{ post.content|markdownize }}
+  </div>
 {% endblock %}

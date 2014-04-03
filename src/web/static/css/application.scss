@@ -4,13 +4,6 @@ $black-color: lighten(black, 20%);
 $white-color: darken(white, 25%);
 $lighter-white-color: lighten($white-color, 10%);
 
-/* Functional Colors */
-$generic-link-color: $red-color;
-$generic-link-hover-color: $red-color;
-$generic-link-hover-border-color: $red-color;
-
-$button-background-color: $red-color;
-
 /* Functional Layouts */
 $footer-height: 265px;
 
@@ -25,13 +18,29 @@ p {
 }
 
 a {
-    color: $generic-link-color;
+    color: $red-color;
     text-decoration: none;
     &:hover, &:focus {
-        color: $generic-link-hover-color;
+        color: $red-color;
         text-decoration: none;
-        border-bottom: 1px dashed $generic-link-hover-border-color;
+        border-bottom: 1px dashed $red-color
     }
+}
+
+/* Pagination */
+.pagination {
+    width: 92%;
+    position: relative;
+    left: 4%;
+    font-weight: 600;
+}
+
+.newer-link {
+    color: $red-color;
+}
+
+.older-link {
+    color: $red-color;
 }
 
 /* Generic CSS */
@@ -118,7 +127,7 @@ a {
     text-align: center;
     padding-bottom: 30px;
     margin-bottom: 30px;
-    border-bottom: 6px solid $black-color;
+    border-bottom: 2px solid $black-color;
 }
 
 .post-title {

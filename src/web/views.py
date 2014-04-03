@@ -1,14 +1,19 @@
-from flask import render_template, jsonify, abort
+from flask import render_template, jsonify, abort, request
+
 from web import app
 from data.models import Post
 from config import app_config
+from util import convert
 
 @app.route("/")
 @app.route("/posts")
 def posts():
     " Displays a list of posts "
     posts = app.db.session.query(Post).order_by(Post.published_dt.desc())
-    return render_template('/posts/index.tmpl', posts=posts)
+    page = convert(request.args.get('page'), int, 1)
+    paginated_posts = posts.paginate(page=page, per_page=8)
+
+    return render_template('/posts/index.tmpl', posts=paginated_posts)
 
 @app.route("/posts/<string:slug>")
 def post(slug):
