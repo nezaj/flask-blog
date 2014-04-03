@@ -4,7 +4,6 @@ Flask-SQLAlchemy (https://github.com/mitsuhiko/flask-sqlalchemy).
 """
 
 from math import ceil
-from sqlalchemy import asc, desc
 
 class Pagination(object):
 

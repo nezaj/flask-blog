@@ -2,7 +2,8 @@ import os
 from flask import Flask
 
 from config import app_config
-from web import assets, db
+from web import assets
+from data.db import DatabaseConnection
 
 class BlogApp(Flask):
 
@@ -14,7 +15,7 @@ class BlogApp(Flask):
 
 def initialize_db(app):
     db_url = app.config['SQLALCHEMY_DATABASE_URI']
-    app.db = db.DatabaseConnection(db_url)
+    app.db = DatabaseConnection(db_url)
 
     @app.teardown_appcontext
     def remove_session(response):  # pylint: disable=W0612

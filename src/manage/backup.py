@@ -4,7 +4,7 @@ import tarfile
 
 def backup_posts(args):
     """
-    Makes a tarfile out of the src darget and saves it into the target.
+    Makes a tarfile out of the src dir and saves it into the target.
     Meant to be used for backing-up posts directory
     """
 
