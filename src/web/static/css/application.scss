@@ -1,29 +1,29 @@
 /* Colors */
-$red-color: #f03838;
+$blue-color: #4582ec;
 $black-color: lighten(black, 20%);
+$lighter-black-color: lighten($black-color, 30%);
 $white-color: darken(white, 25%);
 $lighter-white-color: lighten($white-color, 10%);
+
+/* Functional Colors */
+$link-color: $blue-color;
+$post-stub-hover-background: lighten($link-color, 38%);
+$hover-link-color: darken($link-color, 15%);
 
 /* Functional Layouts */
 $footer-height: 265px;
 
-
 /* Over-write theme rules */
-body {
-    color: $black-color;
-}
+body { color: $black-color; }
 
-p {
-    line-height: 1.8;
-}
+p { line-height: 1.8; }
 
 a {
-    color: $red-color;
+    color: $link-color;
     text-decoration: none;
     &:hover, &:focus {
-        color: $red-color;
+        color: $hover-link-color;
         text-decoration: none;
-        border-bottom: 1px dashed $red-color
     }
 }
 
@@ -44,10 +44,6 @@ a {
     padding-top: 20px;
 }
 
-.older-link {
-    color: $red-color;
-}
-
 /* Generic CSS */
 #wrapper {
     height: auto;
@@ -64,20 +60,18 @@ a {
 .text-center { text-align: center; }
 
 /* Header-related CSS */
-.header {
-    margin: 100px 0px 35px;
-}
+.header { margin: 100px 0px 35px; }
 
 .site-title-wrapper {
     display: table;
     margin: 0 auto;
     a {
-        background: $red-color;
-        color: #FEFEFE;
-    &:hover {
-        background: $black-color;
-        border-bottom: 0;
-        }
+        background: $link-color;
+        &:hover {
+            background: $black-color;
+            color: white;
+            border-bottom: 0;
+            }
     }
 }
 
@@ -96,8 +90,8 @@ a {
 
 .button-square {
     float: left;
-    background: $red-color;
-    color: $white-color;
+    background: $link-color;
+    color: white;
     margin-left: 10px;
     padding: 5px 7px;
 }
@@ -127,16 +121,65 @@ a {
     }
 }
 
-/* Post-related CSS Rules */
+/* Shared Post-related CSS Rules */
 .post-header {
     text-align: center;
     padding-bottom: 30px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid $black-color;
+    border-bottom: 3px solid $black-color;
 }
 
 .post-title {
     margin-bottom: 20px;
     text-transform: uppercase;
-    font-size: 1.2em;
+    font-size: 1.0em;
+}
+
+/* Post Index CSS Rules */
+.post-index { padding-top: 0px; }
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-stub {
+    border-bottom: 1px dotted $black-color;
+    a {
+        -webkit-transition:all .2s ease-in-out;
+        -moz-transition:all .2s ease-in-out;
+        transition:all .2s ease-in-out;
+        display: block;
+        padding: 1.2em 0em;
+        font-size: 1.2em;
+        padding-left: 2px;
+        color: $black-color;
+        &:hover {
+            color: $link-color;
+            background: $post-stub-hover-background;
+            border-bottom: 0px
+        }
+    }
+}
+
+.post-stub-publish {
+    display: inline-block;
+    font-size: 0.8em;
+    color: $lighter-black-color;
+}
+
+.paginate-link {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* Post Show CSS Rules */
+.post-content { padding-top: 50px; }
+
+.post-meta {
+    text-transform: uppercase;
+    color: $lighter-black-color;
+    font-size: 0.9em;
+    font-weight: 600;
+    font-family: "Consolas", "Courier", "Gotham Narrow", "Times New Roman", Times, serif;
+    margin-top: 30px;
 }
