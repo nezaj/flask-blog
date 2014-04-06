@@ -33,13 +33,18 @@ def post(slug):
 def error_500():
     raise Exception("This is a fake error for testing purposes.")
 
-# TODO: Turn this off when you do live delopyment
 @app.route("/version")
 def version():
+    " Endpoint for showing application version data "
+
+    if app_config.__name__ == 'ProdConfig':
+        abort(404)
+
     data = {
         "config": app_config.__name__,
         "debug": app.debug,
         "database": repr(app.db.engine.url),
         "posts_directory": app.config['POSTS_DIR']
     }
+
     return jsonify(data)

@@ -1,6 +1,4 @@
 
-from sqlalchemy import create_engine
-
 from manage import generate_post, publish_post, delete_post
 from data.db import get_db
 from data.models import Base

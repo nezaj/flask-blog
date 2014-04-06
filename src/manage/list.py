@@ -1,7 +1,6 @@
 from web import app
 from data.models import Post
 
-# TODO: Make this more useful somehow
 def list_posts(args):  # pylint: disable=W0613
     " List published and unpublished posts "
 
@@ -9,7 +8,6 @@ def list_posts(args):  # pylint: disable=W0613
         for p in posts:
             print p.title
 
-    # Fetch published and unpublished posts
     published_posts = app.db.session.query(Post).filter(Post.published).order_by(Post.published_dt.desc())
     unpublished_posts = app.db.session.query(Post).filter(~Post.published)
 

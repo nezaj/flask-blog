@@ -14,8 +14,9 @@ def random_range(a, b):
     return range(random.randint(a, b))
 
 def generate_phrase(min_words=3, max_words=5):
-    "Generates a phrase containing several random words."
-    return " ".join([random.choice(words) for _ in random_range(min_words, max_words)])
+    "Generates a phrase with words chosen at random without replacement"
+    num_words = len(random_range(min_words, max_words))
+    return " ".join(random.sample(words, num_words))
 
 def generate_content(min_phrases=3, max_phrases=5):
     " Generates content based on random sentences "
