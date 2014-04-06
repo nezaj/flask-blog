@@ -1,5 +1,7 @@
+import os
+
 from sqlalchemy import func
-from data.db import get_db
+from data.db import DatabaseConnection, get_db
 from data.models import Post, Tag
 from manage.util import get_post_path, slugify
 
@@ -16,8 +18,14 @@ def publish_post(args, force=False):
 
     # Prompt whether to delete post if already exists in db
     title = args.title
-    db = get_db()
+
+    if hasattr(args, 'prod') and args.prod:
+        db = DatabaseConnection(os.environ.get('HEROKU_BLOG'))
+    else:
+        db = get_db()
+
     p = db.session.query(Post).filter_by(title=title).first()
+
     if p:
         if not force:
             resp = raw_input("Post with title '{}' already exists! Do you want to overwite (y/n)? ".format(args.title))

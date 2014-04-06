@@ -34,8 +34,5 @@ class TestConfig(BaseConfig):
     db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
-class HerokuConfig(BaseConfig):
-    # TODO: Make this point to the right thing
-    db_path = os.path.join(BaseConfig.WEB_DIR, 'dev.db')
-    SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
-    # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+class ProdConfig(BaseConfig):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')

@@ -10,7 +10,6 @@ from test.generate_tools import generate_post as dummy_post
 
 def prepopulate_db():
 
-    # TODO: There's a bug here with adding new tags, look into it
     for _ in xrange(0, 50):
         p = dummy_post()
         generate_post(p, force=True)
@@ -36,9 +35,11 @@ def rebuild_db():
 
     Base.metadata.drop_all(db.engine)
     Base.metadata.create_all(db.engine)
-    stamp_db()
+    # stamp_db()
 
 if __name__ == '__main__':
     rebuild_db()
-    prepopulate_db()
+    # TODO: This is a hack, fix it later
+    if not app_config.__name__ == "ProdConfig":
+        prepopulate_db()
     print 'database rebuilt!'

@@ -9,7 +9,7 @@ class Post(Base):
     __tablename__ = 'posts'
 
     id = Column(Integer, primary_key=True)
-    author = Column(Integer)
+    author = Column(String(60))
     title = Column(String(120), unique=True)
     slug = Column(String(120), index=True, unique=True)
     content = Column(Text)
