@@ -28,6 +28,7 @@ pylint:
     pylint src/data && \
     pylint src/manage && \
     pylint src/web && \
+    pylint src/test && \
 	PYTHONPATH=src pylint src/*.py
 
 nosetests:
