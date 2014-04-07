@@ -6,6 +6,7 @@ from data.models import Post, Tag
 from manage.util import get_post_path, slugify
 
 def publish_post(args, force=False):
+    # TODO: I'm really not happy with function. It should be split up
 
     def parse_attr(attr):
         return attr[attr.find(':') + 2:]
@@ -19,6 +20,7 @@ def publish_post(args, force=False):
     # Prompt whether to delete post if already exists in db
     title = args.title
 
+    # TODO: This seems like a hack, there may be a better way
     if hasattr(args, 'prod') and args.prod:
         db = DatabaseConnection(os.environ.get('HEROKU_BLOG'))
     else:

@@ -4,7 +4,6 @@ and infrastructure for enumerating and loading templates
 """
 
 from flask import Markup
-from datetime import datetime
 import misaka
 from web import app
 

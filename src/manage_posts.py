@@ -17,7 +17,7 @@ Usage: ./manage_posts <command> <args>
 import os
 import argparse
 
-from config import app_config, DevConfig
+from config import DevConfig
 from manage import generate_post, publish_post, \
                    list_posts, delete_post, backup_posts
 from manage.util import clean_title
@@ -35,7 +35,8 @@ if __name__ == '__main__':
     publish_parser = subparsers.add_parser('publish', description="Publish static file")
     publish_parser.set_defaults(func=publish_post)
     publish_parser.add_argument('title', type=clean_title, help="Title of post")
-    publish_parser.add_argument("--prod", action="store_true", default=False, help="Flag for publishing to production db")
+    publish_parser.add_argument("--prod", action="store_true",
+                                default=False, help="Flag for publishing to production db")
 
     # Parser for generating static files
     generate_parser = subparsers.add_parser('generate', description="Generate static file")
