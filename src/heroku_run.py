@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-" Used for running heroku app "
+" Used by gunicorn in heroku deployment "
 
-# Need to import app for heroku to run application
+# Gunicorn uses app
 # pylint: disable=W0611
 from web import app

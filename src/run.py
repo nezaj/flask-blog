@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-" Run webserver "
+" Quick script to run webserver "
 
 from web import app
 app.run()
