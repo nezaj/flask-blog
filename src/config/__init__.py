@@ -7,12 +7,12 @@ for creating the app, using alembic, generating posts, etc.
 """
 
 import os
-from settings import DevConfig, ProdConfig, TestConfig
+from settings import DevConfig, HerokuConfig, TestConfig
 
 # Config settings
 config_dict = {
     'dev': DevConfig,
-    'prod': ProdConfig,
+    'prod': HerokuConfig,
     'test': TestConfig
 }
 

@@ -37,7 +37,7 @@ def error_500():
 def version():
     " Endpoint for showing application version data "
 
-    if app_config.__name__ == 'ProdConfig':
+    if app_config['ENV'] == 'prod':
         abort(404)
 
     data = {

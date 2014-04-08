@@ -25,14 +25,17 @@ class BaseConfig(object):
     ALEMBIC_INI_PATH = os.path.join(SRC_DIR, 'alembic.ini')
 
 class DevConfig(BaseConfig):
+    ENV = 'dev'
     DEBUG = True
     db_path = os.path.join(BaseConfig.WEB_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class TestConfig(BaseConfig):
+    ENV = 'test'
     POSTS_DIR = os.path.join(BaseConfig.TEST_DIR, 'posts')
     db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
-class ProdConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+class HerokuConfig(BaseConfig):
+    ENV = 'prod'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') # This will be defined in Heroku

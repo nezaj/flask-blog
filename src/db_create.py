@@ -35,11 +35,12 @@ def rebuild_db():
 
     Base.metadata.drop_all(db.engine)
     Base.metadata.create_all(db.engine)
-    # stamp_db()
 
 if __name__ == '__main__':
     rebuild_db()
-    # TODO: This is a hack, fix it later
-    if not app_config.__name__ == "ProdConfig":
+
+    if not app_config['ENV'] == 'prod':
+        stamp_db()
         prepopulate_db()
+
     print 'database rebuilt!'
