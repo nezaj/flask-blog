@@ -39,7 +39,7 @@ def rebuild_db():
 if __name__ == '__main__':
     rebuild_db()
 
-    if not app_config['ENV'] == 'prod':
+    if not app_config.ENV == 'prod':
         stamp_db()
         prepopulate_db()
 

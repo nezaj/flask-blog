@@ -22,7 +22,7 @@ def post(slug):
     if not post:
         abort(404)
 
-    tags = ','.join([t.name for t in post.tags])
+    tags = ', '.join([t.name for t in post.tags])
     prev_post = app.db.session.query(Post).filter(Post.id < post.id).order_by(Post.id.desc()).first()
     next_post = app.db.session.query(Post).filter(Post.id > post.id).order_by(Post.id.asc()).first()
 
@@ -37,7 +37,7 @@ def error_500():
 def version():
     " Endpoint for showing application version data "
 
-    if app_config['ENV'] == 'prod':
+    if app_config.ENV == 'prod':
         abort(404)
 
     data = {
