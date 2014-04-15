@@ -3,12 +3,19 @@ Configures app settings for dev, testing, and Heroku
 """
 
 import os
+import logging
+
 from sqlalchemy.engine.url import URL
 
 class BaseConfig(object):
     # controls whether web interfance users are in Flask debug mode
     # (e.g. Werkzeug stack trace console, unminified assets)
     DEBUG = False
+
+    # Loggging
+    APP_LOG_LEVEL = logging.DEBUG
+    SQLALCHEMY_LOG_LEVEL = logging.WARN
+    STDERR_LOG_FORMAT = ('%(asctime)s %(levelname)s %(message)s','%m/%d/%Y %I:%M:%S %p')
 
     # Location of db connection. Use in-memory db by default
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=None)
@@ -27,15 +34,27 @@ class BaseConfig(object):
 class DevConfig(BaseConfig):
     ENV = 'dev'
     DEBUG = True
+
+    # Lower log level in debug to see executed SQL
+    SQLALCHEMY_LOG_LEVEL = logging.WARN
+
+    # DB is located in web directory
     db_path = os.path.join(BaseConfig.WEB_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class TestConfig(BaseConfig):
     ENV = 'test'
     POSTS_DIR = os.path.join(BaseConfig.TEST_DIR, 'posts')
+
+    # DB is located in test directory
     db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
 class HerokuConfig(BaseConfig):
     ENV = 'prod'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') # This will be defined in Heroku
+
+    # Don't need to see debug messages in production
+    APP_LOG_LEVEL = logging.INFO
+
+    # This must be defined in Heroku
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
