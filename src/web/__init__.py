@@ -19,14 +19,13 @@ def configure_loggers(app):
     " Sets up app and sqlalchemy loggers "
 
     # Set up app.logger to emit messages according to configuration
+    app.logger.handlers = []
     app.logger.setLevel(level=app.config["APP_LOG_LEVEL"])
     stderr_handler = get_stderr_handler(
         app.config["STDERR_LOG_FORMAT"],
         level=app.config["APP_LOG_LEVEL"])
 
-    # Flask enables a handler that writes to stderr by default in debug mode
-    if not app.debug:
-        app.logger.addHandler(stderr_handler)
+    app.logger.addHandler(stderr_handler)
 
     configure_sqlalchemy_logger(
         app.config["STDERR_LOG_FORMAT"],
@@ -52,7 +51,18 @@ def create_app():
     " Factory for creating app "
     app = BlogApp(app_config)
     configure_loggers(app)
-    initialize_app(app)
+
+    # big hack: if the Werkzeug reloader is going, then it decides to
+    # restart the whole process as a subprocess in order to manage the
+    # reloading, so create_app will run twice.
+
+    # We can detect whether this is the "real" serving
+    # process (the subprocess) by looking for the WERKZEUG_RUN_MAIN
+    # environment variable, so make the execution of heavyweight
+    # initialization code contingent on its presence.
+
+    if os.environ.get('WERKZEUG_RUN_MAIN'):
+        initialize_app(app)
 
     return app
 
