@@ -14,4 +14,5 @@ def register_assets(app):
     css = Bundle(*CSS_ASSETS, filters='cssmin', output='css/bundle.min.css')
 
     assets.register('css_all', css)
+    app.logger.info("Registered assets...")
     return assets

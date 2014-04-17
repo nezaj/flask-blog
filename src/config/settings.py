@@ -12,7 +12,7 @@ class BaseConfig(object):
     # (e.g. Werkzeug stack trace console, unminified assets)
     DEBUG = False
 
-    # Used for signing cookies
+    # Encryption key used to sign Flask session cookies
     SECRET_KEY = os.environ.get('BLOG_KEY')  # This needs to be defined
 
     # Loggging

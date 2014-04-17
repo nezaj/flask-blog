@@ -57,7 +57,7 @@ def create_app():
     # environment variable, so make the execution of heavyweight
     # initialization code contingent on its presence.
 
-    if os.environ.get('WERKZEUG_RUN_MAIN'):
+    if os.environ.get('WERKZEUG_RUN_MAIN') or app.config['ENV'] == 'prod':
         initialize_app(app)
 
     return app
