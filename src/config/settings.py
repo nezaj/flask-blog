@@ -33,10 +33,9 @@ class BaseConfig(object):
 
 class DevConfig(BaseConfig):
     ENV = 'dev'
-    DEBUG = True
 
-    # Lower log level in debug to see executed SQL
-    SQLALCHEMY_LOG_LEVEL = logging.WARN
+    # Enable the flask debugger
+    DEBUG = True
 
     # DB is located in web directory
     db_path = os.path.join(BaseConfig.WEB_DIR, 'dev.db')
@@ -45,6 +44,9 @@ class DevConfig(BaseConfig):
 class TestConfig(BaseConfig):
     ENV = 'test'
     POSTS_DIR = os.path.join(BaseConfig.TEST_DIR, 'posts')
+
+    # Don't want to see info messages about managing posts
+    APP_LOG_LEVEL = logging.WARN
 
     # DB is located in test directory
     db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
