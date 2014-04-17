@@ -12,6 +12,9 @@ class BaseConfig(object):
     # (e.g. Werkzeug stack trace console, unminified assets)
     DEBUG = False
 
+    # Used for signing cookies
+    SECRET_KEY = os.environ.get('BLOG_KEY')  # This needs to be defined
+
     # Loggging
     APP_LOG_LEVEL = logging.DEBUG
     SQLALCHEMY_LOG_LEVEL = logging.WARN
