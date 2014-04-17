@@ -3,8 +3,8 @@ import logging
 
 from flask import Flask
 from config import app_config
-from loghandlers import get_stderr_handler, configure_sqlalchemy_logger
 from web import assets
+from web.loggers import get_app_stderr_handler, configure_sqlalchemy_logger
 from data.db import DatabaseConnection
 
 class BlogApp(Flask):
@@ -20,12 +20,8 @@ def configure_loggers(app):
 
     # Set up app.logger to emit messages according to configuration
     app.logger.handlers = []
-    app.logger.setLevel(level=app.config["APP_LOG_LEVEL"])
-    stderr_handler = get_stderr_handler(
-        app.config["STDERR_LOG_FORMAT"],
-        level=app.config["APP_LOG_LEVEL"])
-
-    app.logger.addHandler(stderr_handler)
+    app.logger.setLevel(app.config["APP_LOG_LEVEL"])
+    app.logger.addHandler(get_app_stderr_handler())
 
     configure_sqlalchemy_logger(
         app.config["STDERR_LOG_FORMAT"],

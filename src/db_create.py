@@ -1,19 +1,24 @@
 #!/usr/bin/env python
 
-" Script to re-create the database and populate it with some sample posts"
+"""
+Script to re-create the database and populate it with some sample posts
+"""
 
 from config import app_config
 from data.db import DatabaseConnection
 from data.models import Base
 from manage import publish_post, generate_post
 from test.generate_tools import generate_post as dummy_post
+from web.loggers import get_stderr_logger
 
 def prepopulate_db():
 
+    logger = get_stderr_logger()
+
     for _ in xrange(0, 50):
         p = dummy_post()
-        generate_post(p, force=True)
-        publish_post(p, force=True)
+        generate_post(p, logger, force=True)
+        publish_post(p, logger, force=True)
 
 def stamp_db():
     """

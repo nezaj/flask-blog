@@ -21,7 +21,7 @@ from config import DevConfig
 from manage import generate_post, publish_post, \
                    list_posts, delete_post, backup_posts
 from manage.util import clean_title
-
+from web.loggers import get_stderr_logger
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Tools for managing posts")
@@ -60,4 +60,6 @@ if __name__ == '__main__':
     backup_parser.add_argument("-t", "--tgt", default=posts_backup_dir, help="Title of post")
 
     args = parser.parse_args()
-    args.func(args)
+    logger = get_stderr_logger()
+
+    args.func(args, logger)

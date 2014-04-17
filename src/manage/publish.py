@@ -5,7 +5,7 @@ from data.db import DatabaseConnection, get_db
 from data.models import Post, Tag
 from manage.util import get_post_path, slugify
 
-def publish_post(args, force=False):
+def publish_post(args, logger, force=False):
     # TODO: I'm really not happy with function. It should be split up
 
     def parse_attr(attr):
@@ -32,7 +32,7 @@ def publish_post(args, force=False):
         if not force:
             resp = raw_input("Post with title '{}' already exists! Do you want to overwite (y/n)? ".format(args.title))
             if resp != 'y':
-                print "'{}' was not added to the db".format(args.title)
+                logger.info("'{}' was not added to the db".format(args.title))
                 return
 
         db.session.delete(p)
@@ -48,7 +48,7 @@ def publish_post(args, force=False):
             _ = f.readline() # Line seperating content, don't need
             content = f.read()
     except IOError:
-        print "Error: Could not find {}".format(post_path)
+        logger.info("Error: Could not find {}".format(post_path))
         return
 
     # Process attributes
@@ -73,4 +73,4 @@ def publish_post(args, force=False):
     # Commit to db
     db.session.add(new_post)
     db.session.commit()
-    print "Added {} to the db!".format(title)
+    logger.info("Added {} to the db!".format(title))
