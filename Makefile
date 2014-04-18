@@ -39,4 +39,4 @@ pylint:
 
 nosetests:
 	@echo "Running nosetests..."
-	$(VENV_ACTIVATE) && FLASK_BLOG_ENV=test nosetests
+	$(VENV_ACTIVATE) && BLOG_ENV=test nosetests
