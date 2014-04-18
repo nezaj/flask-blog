@@ -61,5 +61,5 @@ class HerokuConfig(BaseConfig):
     # Don't need to see debug messages in production
     APP_LOG_LEVEL = logging.INFO
 
-    # This must be defined in Heroku
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # This must be defined in Heroku or locally
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', os.environ.get('BLOG_URL'))

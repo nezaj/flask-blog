@@ -1,6 +1,6 @@
 """
-Defines config settings based on 'FLASK_BLOG_ENV' enviornment variable.
-Defaults to development configuration if 'FLASK_BLOG_ENV' is not set
+Defines config settings based on 'BLOG_ENV' enviornment variable.
+Defaults to development configuration if 'BLOG_ENV' is not set
 
 app_config is used throughout the project to access config settings
 for creating the app, using alembic, generating posts, etc.
@@ -16,5 +16,5 @@ config_dict = {
     'test': TestConfig
 }
 
-app_env = os.getenv('FLASK_BLOG_ENV')
+app_env = os.getenv('BLOG_ENV')
 app_config = config_dict.get(app_env) or DevConfig
