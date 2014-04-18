@@ -1,7 +1,7 @@
 import os
 from data.db import get_db
 from data.models import Post
-from manage.util import get_post_path
+from commands.util import get_post_path
 
 def delete_post(args, logger):
     """

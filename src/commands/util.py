@@ -8,10 +8,9 @@ from config import app_config
 # Regex for slugify
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 
-def clean_title(t):
-    "Used for pretty-formatting a blog title"
-
-    return t.capitalize()
+def title_case(t):
+    " Title cases a string "
+    return t.title()
 
 def slugify(text, delim=u'-'):
     """

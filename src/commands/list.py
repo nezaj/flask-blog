@@ -1,15 +1,16 @@
-from web import app
+from data.db import get_db
 from data.models import Post
 
-def list_posts(args):  # pylint: disable=W0613
+def list_posts(args, logger):  # pylint: disable=W0613
     " List published and unpublished posts "
 
     def display_posts(posts):
         for p in posts:
             print p.title
 
-    published_posts = app.db.session.query(Post).filter(Post.published).order_by(Post.published_dt.desc())
-    unpublished_posts = app.db.session.query(Post).filter(~Post.published)
+    db = get_db()
+    published_posts = db.session.query(Post).filter(Post.published).order_by(Post.published_dt.desc())
+    unpublished_posts = db.session.query(Post).filter(~Post.published)
 
     # Print and format published posts
     div = "="*20

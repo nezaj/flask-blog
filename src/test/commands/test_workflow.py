@@ -1,4 +1,4 @@
-from manage import generate_post, publish_post, delete_post
+from commands import generate_post, publish_post, delete_post
 from web.loggers import get_stderr_logger
 from data.db import get_db
 from data.models import Base

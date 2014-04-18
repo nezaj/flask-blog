@@ -1,13 +1,11 @@
 import os
 
 from sqlalchemy import func
-from data.db import DatabaseConnection, get_db
+from data.db import get_db
 from data.models import Post, Tag
-from manage.util import get_post_path, slugify
+from commands.util import get_post_path, slugify
 
 def publish_post(args, logger, force=False):
-    # TODO: I'm really not happy with function. It should be split up
-
     def parse_attr(attr):
         return attr[attr.find(':') + 2:]
 
@@ -16,27 +14,6 @@ def publish_post(args, logger, force=False):
 
     def get_tags(tag_name_list):
         return [db.session.query(Tag).filter_by(name=t).first() for t in tag_name_list]
-
-    # Prompt whether to delete post if already exists in db
-    title = args.title
-
-    # TODO: This seems like a hack, there may be a better way
-    if hasattr(args, 'prod') and args.prod:
-        db = DatabaseConnection(os.environ.get('HEROKU_BLOG'))
-    else:
-        db = get_db()
-
-    p = db.session.query(Post).filter_by(title=title).first()
-
-    if p:
-        if not force:
-            resp = raw_input("Post with title '{}' already exists! Do you want to overwite (y/n)? ".format(args.title))
-            if resp != 'y':
-                logger.info("'{}' was not added to the db".format(args.title))
-                return
-
-        db.session.delete(p)
-        db.session.commit()
 
     # Open the file and extract attributes
     post_path = get_post_path(args.title)
@@ -53,24 +30,34 @@ def publish_post(args, logger, force=False):
 
     # Process attributes
     author = parse_attr(author)
-    slug = slugify(title)
+    slug = slugify(args.title)
     tags = parse_attr(tags).split(', ')
     if '' in tags:
         tags.remove('')
 
-    # Create post object
-    new_post = Post(author=author, title=title, slug=slug, content=content, published_dt=func.now())
+    # Update post object
+    db = get_db()
+    publish_post = db.session.query(Post).filter_by(title=args.title)
+    publish_post.update({
+        "author": author,
+        "title": args.title,
+        "slug": slug,
+        "content": content,
+        "published_dt": func.now()
+    }, synchronize_session=False)
+    db.session.commit()
 
-    # Assign tags to post
     if tags:
+        # Add new tags to db
         new_tags = get_new_tags(tags)
         db.session.add_all(new_tags)
         db.session.commit()
 
+        # Assign tags to post
         tags = get_tags(tags)
-        new_post.tags = tags
+        post_obj = publish_post.first()
+        post_obj.tags = tags
+        db.session.add(post_obj)
+        db.session.commit()
 
-    # Commit to db
-    db.session.add(new_post)
-    db.session.commit()
-    logger.info("Added {} to the db!".format(title))
+    logger.info("Published {}!".format(args.title))
