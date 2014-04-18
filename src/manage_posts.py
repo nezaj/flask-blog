@@ -18,9 +18,10 @@ import os
 import argparse
 
 from config import DevConfig
-from manage import generate_post, publish_post, \
-                   list_posts, delete_post, backup_posts
-from manage.util import clean_title
+from commands import generate_post, publish_post, \
+                     list_posts, delete_post, backup_posts, \
+                     bulk_publish_posts
+from commands.util import title_case
 from web.loggers import get_stderr_logger
 
 if __name__ == '__main__':
@@ -34,14 +35,18 @@ if __name__ == '__main__':
     # Parser for adding static files to db
     publish_parser = subparsers.add_parser('publish', description="Publish static file")
     publish_parser.set_defaults(func=publish_post)
-    publish_parser.add_argument('title', type=clean_title, help="Title of post")
+    publish_parser.add_argument('title', type=title_case, help="Title of post")
     publish_parser.add_argument("--prod", action="store_true",
                                 default=False, help="Flag for publishing to production db")
+
+    # Parser for bulk publishing static files
+    bulk_publish_parser = subparsers.add_parser('bulk_publish', description="Bulk publish static files in posts directory")
+    bulk_publish_parser.set_defaults(func=bulk_publish_posts)
 
     # Parser for generating static files
     generate_parser = subparsers.add_parser('generate', description="Generate static file")
     generate_parser.set_defaults(func=generate_post)
-    generate_parser.add_argument('title', type=clean_title, help="Title of post")
+    generate_parser.add_argument('title', type=title_case, help="Title of post")
     generate_parser.add_argument("-a", "--author", default="nezaj", help="Author of post")
     generate_parser.add_argument("-t", "--tags", default="", nargs="*", help="Tags of post")
     generate_parser.add_argument("-c", "--content", help="Post content")
@@ -49,7 +54,7 @@ if __name__ == '__main__':
     # Parser for deleting posts from posts dir and db
     delete_parser = subparsers.add_parser('delete', description="Delete static file")
     delete_parser.set_defaults(func=delete_post)
-    delete_parser.add_argument('title', type=clean_title, help="Title of post")
+    delete_parser.add_argument('title', type=title_case, help="Title of post")
 
     # Parser for backing up posts
     backup_parser = subparsers.add_parser('backup', description="Backup post files")
