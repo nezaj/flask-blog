@@ -8,8 +8,9 @@ from util import convert
 @app.route("/")
 @app.route("/posts")
 def posts():
-    " Displays a list of posts "
-    posts = app.db.session.query(Post).order_by(Post.published_dt.desc())
+    " Displays a list of published posts "
+    posts = app.db.session.query(Post).filter(Post.published)\
+                                      .order_by(Post.published_dt.desc())
     page = convert(request.args.get('page'), int, 1)
     paginated_posts = posts.paginate(page=page, per_page=8)
 
@@ -18,13 +19,19 @@ def posts():
 @app.route("/posts/<string:slug>")
 def post(slug):
     " Displays an individual post "
+    # Note: Not filtering by published to allow draft posts to be viewed
     post = app.db.session.query(Post).filter_by(slug=slug).first()
     if not post:
         abort(404)
 
     tags = ', '.join([t.name for t in post.tags])
-    prev_post = app.db.session.query(Post).filter(Post.id < post.id).order_by(Post.id.desc()).first()
-    next_post = app.db.session.query(Post).filter(Post.id > post.id).order_by(Post.id.asc()).first()
+    # Note: Filtering on published when showing next/previous posts
+    prev_post = app.db.session.query(Post).filter(Post.published)\
+                                          .filter(Post.id < post.id)\
+                                          .order_by(Post.id.desc()).first()
+    next_post = app.db.session.query(Post).filter(Post.published)\
+                                          .filter(Post.id > post.id)\
+                                          .order_by(Post.id.asc()).first()
 
     return render_template('/posts/show.tmpl', post=post, tags=tags,
                            prev_post=prev_post, next_post=next_post)
