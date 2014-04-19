@@ -10,7 +10,8 @@ def generate_post(args, logger, force=False):
     saves it into the static posts directory.
 
     The file name is the slug.md. If the file already exists
-    user is prompted whether to overwrite the file.
+    user is prompted whether to overwrite the file. This prompt is
+    skipped if force is True
     """
     post_path = get_post_path(args.title)
 

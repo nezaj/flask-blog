@@ -9,14 +9,29 @@ from commands.util import get_tags, get_new_tags, parse_attr, \
 
 def publish_post(args, logger):
     """
-    Extracts and updates db post model with metadata from static post file.
+    Extracts and updates db post model based on passed args and metadata
+    from static post file. A post can be considered "published" once this
+    function is run.
 
-    Uses the post title and env defined post directory to locate which static file
-    to use. This is done for convenience so a user can simply type in the name of
-    their post instead of a full file path.
+    There are two types of publishing:
 
-    Sets published_dt to time when this function is run. Also adds new tags to the
-    db if they did not already exist.
+    Normal -- sets published_dt to the current time. This post will be
+              listed in the posts index and will be included in previous/next
+              links.
+
+     Draft -- sets published_dt to None. This post will not appear in the posts
+              index and will not be included in previous/next links. However,
+              this post can still be viewed through the slug url. This is
+              useful if you want to publish your post for select review
+              without displaying a link for everyone to see.
+
+    In both cases the post model will be updated and committed to the db. Also,
+    new tag models are created if a post includes tags that do not already exist
+    in the db.
+
+    Note: We use the post title and env defined post directory to locate which
+    static file to use. This is done for convenience so a user can simply type
+    in the name of their post instead of a full file path.
     """
     # Open the file and extract attributes
     post_path = get_post_path(args.title)
@@ -70,4 +85,5 @@ def publish_post(args, logger):
         db.session.add(post_obj)
         db.session.commit()
 
-    logger.info("Published {}!".format(args.title))
+    action_msg = "Draft published" if args.draft else "Published"
+    logger.info("{} {}!".format(action_msg, args.title))
