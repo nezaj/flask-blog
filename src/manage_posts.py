@@ -37,8 +37,8 @@ if __name__ == '__main__':
     publish_parser = subparsers.add_parser('publish', description="Publish static file")
     publish_parser.set_defaults(func=publish_post)
     publish_parser.add_argument('title', type=title_case, help="Title of post")
-    publish_parser.add_argument("--prod", action="store_true",
-                                default=False, help="Flag for publishing to production db")
+    publish_parser.add_argument("--draft", "-d", action="store_true",
+                                default=False, help="Flag for draft publishing a post")
 
     # Parser for bulk publishing static files
     bulk_publish_parser = subparsers.add_parser('bulk_publish',

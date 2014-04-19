@@ -7,7 +7,7 @@ from collections import namedtuple
 
 from test.dummy import words
 
-PostStruct = namedtuple('PostStruct', ["author", "title", "content", "tags"])
+PostStruct = namedtuple('PostStruct', ["author", "title", "content", "tags", "draft"])
 
 def random_range(a, b):
     "Returns a range from 0 to a random integer."
@@ -29,4 +29,4 @@ def generate_tags():
 def generate_post(author="nezaj", title=None):
     if title is None:
         title = generate_phrase(min_words=1, max_words=2)
-    return PostStruct(author=author, title=title, content=generate_content(), tags=generate_tags())
+    return PostStruct(author=author, title=title, content=generate_content(), tags=generate_tags(), draft=False)

@@ -38,7 +38,10 @@ def publish_post(args, logger):
     if '' in tags:
         tags.remove('')
 
-    # Backup posts in production before publishing
+    # If this is a draft post, don't set the publish date
+    published_dt = None if args.draft else func.now()
+
+    # Backup posts in production
     if app_config.ENV == 'prod':
         make_backup(app_config.POSTS_DIR, app_config.BACKUP_POSTS_DIR, logger)
 
@@ -50,7 +53,7 @@ def publish_post(args, logger):
         "title": args.title,
         "slug": slug,
         "content": content,
-        "published_dt": func.now()
+        "published_dt": published_dt
     }, synchronize_session=False)
     db.session.commit()
 
