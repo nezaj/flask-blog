@@ -6,8 +6,8 @@ from data.pagination import Pagination
 
 class BaseQuery(Query):
     """
-    A custom query object used for models that supports some extra
-    helpful operations on some models.
+    A custom query object for supporting extra helpful operations
+    in addition to SQLAlchemy's built-in Query object
     """
 
     def paginate(self, page=1, per_page=10, die=True):

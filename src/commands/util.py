@@ -1,4 +1,6 @@
-" Helpers for scripts "
+"""
+Helpers for running manage_posts commands.
+"""
 
 import os
 import re
@@ -24,10 +26,7 @@ def get_post_path(post_title):
     return os.path.join(app_config.POSTS_DIR, file_name)
 
 def overwrite_file(file_path):
-    """
-    Bool representing whether to overwrite a file.
-    Returns True if user responsed with y else False
-    """
+    " Bool representing whether to overwrite a file. "
     resp = raw_input("{} already exists! Do you want to overwrite (y/n)? ".format(file_path))
     return True if resp == 'y' else False
 

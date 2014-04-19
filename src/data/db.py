@@ -6,7 +6,6 @@ from data.models.base import BaseQuery
 
 class DatabaseConnection(object):
     " A database connection "
-
     def __init__(self, url, **factory_args):
         self.engine = create_engine(url)
         self.session_factory = sessionmaker(bind=self.engine, query_cls=BaseQuery, **factory_args)

@@ -7,7 +7,6 @@ def backup_posts(args):
     Makes a tarfile out of the src dir and saves it into the target.
     Meant to be used for backing-up posts directory
     """
-
     timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
     tgt_file_name = timestamp + '.tar.gz'
     tgt_file = os.path.join(args.tgt, tgt_file_name)

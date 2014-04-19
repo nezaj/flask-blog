@@ -1,5 +1,5 @@
 """
-Useful functions for generic use
+Generic helpers
 """
 
 import sys

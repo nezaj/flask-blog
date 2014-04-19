@@ -25,7 +25,6 @@ def stamp_db():
     Creates alembic_version table if it doesn't already exist
     and stamps it with the head revision
     """
-
     from alembic.config import Config
     from alembic import command
 
@@ -34,7 +33,6 @@ def stamp_db():
 
 def rebuild_db():
     " Recreates the db and stamps it with the latest revision "
-
     db_url = app_config.SQLALCHEMY_DATABASE_URI
     db = DatabaseConnection(db_url)
 

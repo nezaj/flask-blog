@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 
 """
+Usage: ./manage_posts <command> [<args>]
 Parsers for managing posts. Currently supported commands are:
-Usage: ./manage_posts <command> <args>
 
 - generate <args>: Creates a new static file in folder directory
 - publish <args>: Adds a static file to the db
-- bulk_publish: Publishes all unpublished posts
-- list: Lists published/unpublished posts
 - delete <args>: Deletes specified file from static folder and db
 - backup <args>: Backs-up post directory to specified backup directory
                  make sure you explicitly define this. Currently will
                  use POSTS_DIR defined by DevConfig. We don't ever need
                  to backup posts from the test directory
+
+- bulk_publish: Publishes all unpublished posts
+- list: Lists published/unpublished posts
 """
 
 import os
