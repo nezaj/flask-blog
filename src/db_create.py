@@ -18,7 +18,7 @@ def prepopulate_db():
     for _ in xrange(0, 50):
         p = dummy_post()
         generate_post(p, logger, force=True)
-        publish_post(p, logger, force=True)
+        publish_post(p, logger)
 
 def stamp_db():
     """

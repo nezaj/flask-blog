@@ -22,5 +22,5 @@ class TestPostWorkFlow(object):
         logger = get_stderr_logger()
 
         generate_post(p, logger, force=True)
-        publish_post(p, logger, force=True)
+        publish_post(p, logger)
         delete_post(p, logger)

@@ -6,6 +6,7 @@ Usage: ./manage_posts <command> <args>
 
 - generate <args>: Creates a new static file in folder directory
 - publish <args>: Adds a static file to the db
+- bulk_publish: Publishes all unpublished posts
 - list: Lists published/unpublished posts
 - delete <args>: Deletes specified file from static folder and db
 - backup <args>: Backs-up post directory to specified backup directory
@@ -40,7 +41,8 @@ if __name__ == '__main__':
                                 default=False, help="Flag for publishing to production db")
 
     # Parser for bulk publishing static files
-    bulk_publish_parser = subparsers.add_parser('bulk_publish', description="Bulk publish static files in posts directory")
+    bulk_publish_parser = subparsers.add_parser('bulk_publish',
+                                                description="Bulk publish static files in posts directory")
     bulk_publish_parser.set_defaults(func=bulk_publish_posts)
 
     # Parser for generating static files

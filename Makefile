@@ -32,7 +32,7 @@ pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
     pylint src/data && \
-    pylint src/manage && \
+    pylint src/commands && \
     pylint src/web && \
     pylint src/test && \
 	PYTHONPATH=src pylint src/*.py

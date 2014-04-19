@@ -1,20 +1,21 @@
-import os
-
 from sqlalchemy import func
+
 from data.db import get_db
-from data.models import Post, Tag
-from commands.util import get_post_path, slugify
+from data.models import Post
+from commands.util import get_tags, get_new_tags, parse_attr, \
+                          get_post_path, slugify
 
-def publish_post(args, logger, force=False):
-    def parse_attr(attr):
-        return attr[attr.find(':') + 2:]
+def publish_post(args, logger):
+    """
+    Extracts and updates db post model with metadata from static post file.
 
-    def get_new_tags(tag_name_list):
-        return [Tag(name=t) for t in tag_name_list if not db.session.query(Tag).filter_by(name=t).first()]
+    Uses the post title and env defined post directory to locate which static file
+    to use. This is done for convenience so a user can simply type in the name of
+    their post instead of a full file path.
 
-    def get_tags(tag_name_list):
-        return [db.session.query(Tag).filter_by(name=t).first() for t in tag_name_list]
-
+    Sets published_dt to time when this function is run. Also adds new tags to the
+    db if they did not already exist.
+    """
     # Open the file and extract attributes
     post_path = get_post_path(args.title)
     try:
