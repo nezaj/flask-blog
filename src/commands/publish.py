@@ -1,7 +1,9 @@
 from sqlalchemy import func
 
+from config import app_config
 from data.db import get_db
 from data.models import Post
+from commands.backup import make_backup
 from commands.util import get_tags, get_new_tags, parse_attr, \
                           get_post_path, slugify
 
@@ -35,6 +37,10 @@ def publish_post(args, logger):
     tags = parse_attr(tags).split(', ')
     if '' in tags:
         tags.remove('')
+
+    # Backup posts in production before publishing
+    if app_config.ENV == 'prod':
+        make_backup(app_config.POSTS_DIR, app_config.BACKUP_POSTS_DIR, logger)
 
     # Update post object
     db = get_db()
