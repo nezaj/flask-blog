@@ -9,7 +9,7 @@ from data.db import DatabaseConnection
 from data.models import Base
 from commands import publish_post, generate_post
 from test.generate_tools import generate_post as dummy_post
-from web.loggers import get_stderr_logger
+from loggers import get_stderr_logger
 
 def prepopulate_db():
 

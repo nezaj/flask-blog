@@ -24,7 +24,7 @@ from commands import generate_post, publish_post, \
                      list_posts, delete_post, backup_posts, \
                      bulk_publish_posts
 from commands.util import title_case
-from web.loggers import get_stderr_logger
+from loggers import get_stderr_logger
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Tools for managing posts")

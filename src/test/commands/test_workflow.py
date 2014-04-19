@@ -1,5 +1,5 @@
 from commands import generate_post, publish_post, delete_post
-from web.loggers import get_stderr_logger
+from loggers import get_stderr_logger
 from data.db import get_db
 from data.models import Base
 from test.generate_tools import generate_post as dummy_post

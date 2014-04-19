@@ -4,7 +4,7 @@ import logging
 from flask import Flask
 from config import app_config
 from web import assets
-from web.loggers import get_app_stderr_handler, configure_sqlalchemy_logger
+from loggers import get_app_stderr_handler, configure_sqlalchemy_logger
 from data.db import DatabaseConnection
 
 class BlogApp(Flask):
