@@ -1,7 +1,7 @@
 import os
 from data.db import get_db
 from data.models import Post
-from commands.util import get_post_path
+from commands.util import get_post_path, slugify
 
 def delete_post(args, logger):
     """
@@ -17,7 +17,8 @@ def delete_post(args, logger):
             logger.info("Error: Could not find {}".format(post_path))
 
     def delete_from_db(title):
-        post_model = db.session.query(Post).filter(Post.title == args.title).first()
+        slug = slugify(title)
+        post_model = db.session.query(Post).filter_by(slug=slug).first()
         if post_model:
             db.session.delete(post_model)
             db.session.commit()

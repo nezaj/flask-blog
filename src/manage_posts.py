@@ -16,7 +16,6 @@ Parsers for managing posts. Currently supported commands are:
 - list: Lists published/unpublished posts
 """
 
-import os
 import argparse
 
 from config.settings import BaseConfig
@@ -52,7 +51,7 @@ if __name__ == '__main__':
     generate_parser.add_argument('title', type=title_case, help="Title of post")
     generate_parser.add_argument("-a", "--author", default="nezaj", help="Author of post")
     generate_parser.add_argument("-t", "--tags", default="", nargs="*", help="Tags of post")
-    generate_parser.add_argument("-c", "--content", help="Post content")
+    generate_parser.add_argument("-c", "--content", default="\n", help="Post content")
 
     # Parser for deleting posts from posts dir and db
     delete_parser = subparsers.add_parser('delete', description="Delete static file")
