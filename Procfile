@@ -1,2 +1,2 @@
 web: gunicorn --pythonpath src heroku_run:app
-init: python src/db_create.py
+init: python src/sql.py build
