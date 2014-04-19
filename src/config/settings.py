@@ -31,6 +31,9 @@ class BaseConfig(object):
     WEB_DIR = os.path.join(SRC_DIR, 'web')
     STATIC_DIR = os.path.join(WEB_DIR, 'static')
 
+    # Backup directory for posts
+    BACKUP_POSTS_DIR = os.path.join(os.path.expanduser('~'), 'backup/blog_posts')
+
     # Location of alembic config file
     ALEMBIC_INI_PATH = os.path.join(SRC_DIR, 'alembic.ini')
 

@@ -9,7 +9,7 @@ Parsers for managing posts. Currently supported commands are:
 - delete <args>: Deletes specified file from static folder and db
 - backup <args>: Backs-up post directory to specified backup directory
                  make sure you explicitly define this. Currently will
-                 use POSTS_DIR defined by DevConfig. We don't ever need
+                 use POSTS_DIR defined by BaseConfig. We don't ever need
                  to backup posts from the test directory
 
 - bulk_publish: Publishes all unpublished posts
@@ -19,7 +19,7 @@ Parsers for managing posts. Currently supported commands are:
 import os
 import argparse
 
-from config import DevConfig
+from config.settings import BaseConfig
 from commands import generate_post, publish_post, \
                      list_posts, delete_post, backup_posts, \
                      bulk_publish_posts
@@ -62,10 +62,8 @@ if __name__ == '__main__':
     # Parser for backing up posts
     backup_parser = subparsers.add_parser('backup', description="Backup post files")
     backup_parser.set_defaults(func=backup_posts)
-    backup_parser.add_argument("-s", "--src", default=DevConfig.POSTS_DIR, help="Source directory for posts to backup")
-
-    posts_backup_dir = os.path.join(os.path.expanduser('~'), 'backup/blog_posts')
-    backup_parser.add_argument("-t", "--tgt", default=posts_backup_dir, help="Title of post")
+    backup_parser.add_argument("-s", "--src", default=BaseConfig.POSTS_DIR, help="Source directory for posts to backup")
+    backup_parser.add_argument("-t", "--tgt", default=BaseConfig.BACKUP_POSTS_DIR, help="Title of post")
 
     args = parser.parse_args()
     logger = get_stderr_logger()
