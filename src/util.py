@@ -18,7 +18,6 @@ def convert(value, to_type, default=None):
     except Exception:  # pylint: disable=W0703
         return default
 
-
 def parse_sqlalchemy_url(input_url):
     """
     Parses the input as a valid SQLAlchemy URL, or otherwise raises an
@@ -31,3 +30,9 @@ def parse_sqlalchemy_url(input_url):
     except Exception as e:
         _, e, tb = sys.exc_info()
         raise argparse.ArgumentTypeError, argparse.ArgumentTypeError(str(e)), tb
+
+def yes_no(message):
+    response = raw_input("{} [y/n] ".format(message))
+    while response.lower() not in ['y', 'n']:
+        response = raw_input("Please enter 'y' or 'n'. ")
+    return response == 'y'

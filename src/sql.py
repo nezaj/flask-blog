@@ -6,13 +6,7 @@ import subprocess
 
 from config import app_config
 from data.db import DatabaseConnection
-from util import parse_sqlalchemy_url
-
-def yes_no(message):
-    response = raw_input("{} [y/n] ".format(message))
-    while response.lower() not in ['y', 'n']:
-        response = raw_input("Please enter 'y' or 'n'. ")
-    return response == 'y'
+from util import parse_sqlalchemy_url, yes_no
 
 def build_named_arglist(arg_dict):
     for name, value in arg_dict.iteritems():

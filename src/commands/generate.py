@@ -26,8 +26,8 @@ def generate_post(args, logger, force=False):
     p = db.session.query(Post).filter_by(title=args.title).first()
     if p:
         if not force:
-            resp = raw_input("Post with title '{}' already exists in db! Do you want to overwite (y/n)? ".\
-                   format(args.title))
+            resp = raw_input("Post with title '{}' already exists in db! Do you want to overwite (y/n)? "\
+                   .format(args.title))
             if resp != 'y':
                 logger.info("'{}' was not added to the db".format(args.title))
                 return
