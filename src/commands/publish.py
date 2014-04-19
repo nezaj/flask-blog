@@ -50,12 +50,12 @@ def publish_post(args, logger):
 
     if tags:
         # Add new tags to db
-        new_tags = get_new_tags(tags)
+        new_tags = get_new_tags(db, tags)
         db.session.add_all(new_tags)
         db.session.commit()
 
         # Assign tags to post
-        tags = get_tags(tags)
+        tags = get_tags(db, tags)
         post_obj = publish_post.first()
         post_obj.tags = tags
         db.session.add(post_obj)
