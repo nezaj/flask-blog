@@ -43,9 +43,3 @@ def generate_post(args, logger, force=False):
         f.write(args.content)
 
     logger.info("Generated new file at {}".format(post_path))
-
-    # Create new post in db
-    new_post = Post(author=args.author, title=args.title, slug=slugify(args.title), content=args.content)
-    db.session.add(new_post)
-    db.session.commit()
-    logger.info("Added {} to the db!".format(new_post.title))

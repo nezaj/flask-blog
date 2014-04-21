@@ -9,9 +9,8 @@ from commands.util import get_tags, get_new_tags, parse_attr, \
 
 def publish_post(args, logger):
     """
-    Extracts and updates db post model based on passed args and metadata
-    from static post file. A post can be considered "published" once this
-    function is run.
+    Persists post to database based on passed args and metadata from static
+    post file. A post can be considered "published" once this function is run.
 
     There are two types of publishing:
 
@@ -60,16 +59,11 @@ def publish_post(args, logger):
     if app_config.ENV == 'prod':
         make_backup(app_config.POSTS_DIR, app_config.BACKUP_POSTS_DIR, logger)
 
-    # Update post object
+    # Create post in db
     db = get_db()
-    publish_post = db.session.query(Post).filter_by(title=args.title)
-    publish_post.update({
-        "author": author,
-        "title": args.title,
-        "slug": slug,
-        "content": content,
-        "published_dt": published_dt
-    }, synchronize_session=False)
+    new_post = Post(author=author, title=args.title, slug=slug,
+                    content=content, published_dt=published_dt)
+    db.session.add(new_post)
     db.session.commit()
 
     if tags:
@@ -80,9 +74,8 @@ def publish_post(args, logger):
 
         # Assign tags to post
         tags = get_tags(db, tags)
-        post_obj = publish_post.first()
-        post_obj.tags = tags
-        db.session.add(post_obj)
+        new_post.tags = tags
+        db.session.add(new_post)
         db.session.commit()
 
     action_msg = "Draft published" if args.draft else "Published"
