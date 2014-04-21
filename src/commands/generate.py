@@ -1,8 +1,6 @@
 import os
 
-from commands.util import get_post_path, overwrite_file, slugify
-from data.models import Post
-from data.db import get_db
+from commands.util import get_post_path, overwrite_file
 
 def generate_post(args, logger, force=False):
     """
@@ -20,19 +18,6 @@ def generate_post(args, logger, force=False):
         if not overwrite_file(post_path):
             logger.info("{} was not re-generated".format(post_path))
             return
-
-    # Prompt whether to delete post if already exists in db
-    db = get_db()
-    p = db.session.query(Post).filter_by(title=args.title).first()
-    if p:
-        if not force:
-            resp = raw_input("Post with title '{}' already exists in db! Do you want to overwite (y/n)? "\
-                   .format(args.title))
-            if resp != 'y':
-                logger.info("'{}' was not added to the db".format(args.title))
-                return
-        db.session.delete(p)
-        db.session.commit()
 
     # Create post skeleton
     with open(post_path, 'w') as f:

@@ -7,7 +7,7 @@ from commands.backup import make_backup
 from commands.util import get_tags, get_new_tags, parse_attr, \
                           get_post_path, slugify
 
-def publish_post(args, logger):
+def publish_post(args, logger, force=False):
     """
     Persists post to database based on passed args and metadata from static
     post file. A post can be considered "published" once this function is run.
@@ -59,8 +59,20 @@ def publish_post(args, logger):
     if app_config.ENV == 'prod':
         make_backup(app_config.POSTS_DIR, app_config.BACKUP_POSTS_DIR, logger)
 
-    # Create post in db
+    # Prompt whether to delete post if already exists in db
     db = get_db()
+    p = db.session.query(Post).filter_by(title=args.title).first()
+    if p:
+        if not force:
+            resp = raw_input("Post with title '{}' already exists in db! Do you want to overwite (y/n)? "\
+                   .format(args.title))
+            if resp != 'y':
+                logger.info("'{}' was not added to the db".format(args.title))
+                return
+        db.session.delete(p)
+        db.session.commit()
+
+    # Create post
     new_post = Post(author=author, title=args.title, slug=slug,
                     content=content, published_dt=published_dt)
     db.session.add(new_post)

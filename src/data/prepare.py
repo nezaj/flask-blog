@@ -10,7 +10,7 @@ def prepopulate_db():
     for _ in xrange(0, 50):
         p = dummy_post()
         generate_post(p, logger, force=True)
-        publish_post(p, logger)
+        publish_post(p, logger, force=True)
 
 # TODO: I'm currently not using this, I should either use it or throw it out
 def stamp_db():
