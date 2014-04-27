@@ -8,6 +8,7 @@ dependencies = [
     "nose==1.3.0",
     "cssmin==0.2.0",
     "pyscss==1.2.0",
+    "grip",
     "misaka==1.0.2",
     "gunicorn==0.17.2",
     "sqlalchemy==0.9.3",
