@@ -3,8 +3,6 @@
 " Serves the application "
 
 import argparse
-import os
-import subprocess
 
 def parse_hostname(hostname, default_port=80):
     if hostname.find(':') > 0:
