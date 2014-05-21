@@ -31,10 +31,10 @@ pep8:
 pylint:
 	@echo "Running pylint..."
 	$(VENV_ACTIVATE) && \
-    pylint src/data && \
-    pylint src/commands && \
-    pylint src/web && \
-    pylint src/test && \
+	pylint src/data && \
+	pylint src/commands && \
+	pylint src/web && \
+	pylint src/test && \
 	PYTHONPATH=src pylint src/*.py
 
 nosetests:
