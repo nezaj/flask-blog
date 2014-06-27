@@ -9,8 +9,5 @@ class Tag(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(40), index=True, unique=True)
 
-    def __init__(self, name):
-        self.name = name
-
     def __repr__(self):
         return '<Tag {}>'.format(self.name)
