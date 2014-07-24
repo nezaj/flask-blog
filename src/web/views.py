@@ -19,16 +19,17 @@ def posts():
 @app.route("/posts/<string:slug>")
 def post(slug):
     " Displays an individual post "
-    # Note: Not filtering by published to allow draft posts to be viewed
     post = app.db.session.query(Post).filter_by(slug=slug).first()
     if not post:
         abort(404)
 
     tags = ', '.join([t.name for t in post.tags])
-    # Note: Filtering on published when showing next/previous posts
+
+    # TODO: split this into a function
     prev_post = app.db.session.query(Post).filter(Post.published)\
                                           .filter(Post.id < post.id)\
                                           .order_by(Post.id.desc()).first()
+
     next_post = app.db.session.query(Post).filter(Post.published)\
                                           .filter(Post.id > post.id)\
                                           .order_by(Post.id.asc()).first()
