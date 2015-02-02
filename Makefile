@@ -22,7 +22,7 @@ check:
 
 virtualenv:
 	test -d $(VENV_PATH) || virtualenv $(VENV_PATH)
-	$(VENV_ACTIVATE) && python setup.py --quiet develop
+	$(VENV_ACTIVATE) && python setup.py develop
 
 pep8:
 	@echo "Running pep8..."
