@@ -1,6 +1,19 @@
 ## Flask Blog
 My personal blogging platform. Made with [Flask][flask]. Uses simple command line tools to manage and publish posts. Supports tagging, drafting, and backing-up posts.
 
+### Quickstart
+```
+git clone git@github.com:nezaj/flask-blog.git
+sudo pip install virtualenv
+make virtualenv
+source ~/.virtualenvs/blog/bin/activate
+cd src
+./sql.py build  # Build the database
+./run.py  # Runs the development server
+```
+
+Now go to [http://localhost:5000/][localhost] in your favorite browser. Huzzah!
+
 ### Quick Example
 From the root directory, use the following to generate a new post
 ```
@@ -29,3 +42,4 @@ CONFIG_ENV=prod ./manage_posts.py publish "Sample Post" -d`
 See the `src/commands` directory for a full list of commands
 
 [flask]: http://flask.pocoo.org/
+[localhost]: http://localhost:5000/
