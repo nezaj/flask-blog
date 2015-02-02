@@ -184,3 +184,9 @@ a {
     font-family: "Consolas", "Courier", "Gotham Narrow", "Times New Roman", Times, serif;
     margin-top: 30px;
 }
+
+/* Default blockquote formatting doesn't fit */
+blockquote {
+    font-size: 0.9em;
+    border-left: 3px solid lightgrey;
+}
