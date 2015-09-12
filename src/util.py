@@ -1,7 +1,6 @@
 """
 Generic helpers
 """
-
 import sys
 import argparse
 

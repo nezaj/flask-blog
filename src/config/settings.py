@@ -7,6 +7,14 @@ import logging
 
 from sqlalchemy.engine.url import URL
 
+def import_env():
+    if os.path.exists('.env'):
+        print 'Importing environment from .env...'
+        for line in open('.env'):
+            var = line.strip().split('=', 1)
+            if len(var) == 2:
+                os.environ[var[0]] = var[1]
+
 class BaseConfig(object):
     # controls whether web interfance users are in Flask debug mode
     # (e.g. Werkzeug stack trace console, unminified assets)
@@ -60,6 +68,9 @@ class TestConfig(BaseConfig):
 
 class ProdConfig(BaseConfig):
     ENV = 'prod'
+
+    # Get production configs
+    import_env()
 
     # Don't need to see debug messages in production
     APP_LOG_LEVEL = logging.INFO

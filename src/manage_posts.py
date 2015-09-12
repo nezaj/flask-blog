@@ -26,17 +26,7 @@ from commands import generate_post, publish_post, \
 from commands.util import title_case
 from loggers import get_stderr_logger
 
-def import_env():
-    if os.path.exists('.env'):
-        print 'Importing environment from .env...'
-        for line in open('.env'):
-            var = line.strip().split('=', 1)
-            if len(var) == 2:
-                os.environ[var[0]] = var[1]
-
 if __name__ == '__main__':
-    import_env()
-
     parser = argparse.ArgumentParser(description="Tools for managing posts")
     subparsers = parser.add_subparsers()
 
