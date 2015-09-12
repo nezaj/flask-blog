@@ -4,6 +4,9 @@
 # Cached Flask Assets
 .webassets-cache/
 
+# Private information
+.env
+
 # Post directories
 src/posts
 src/test/posts

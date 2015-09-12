@@ -58,11 +58,10 @@ class TestConfig(BaseConfig):
     db_path = os.path.join(BaseConfig.TEST_DIR, 'dev.db')
     SQLALCHEMY_DATABASE_URI = URL(drivername='sqlite', database=db_path)
 
-class HerokuConfig(BaseConfig):
+class ProdConfig(BaseConfig):
     ENV = 'prod'
 
     # Don't need to see debug messages in production
     APP_LOG_LEVEL = logging.INFO
 
-    # This must be defined in Heroku or locally
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', os.environ.get('BLOG_URL'))
+    SQLALCHEMY_DATABASE_URI = os.environ.get('BLOG_URL')
